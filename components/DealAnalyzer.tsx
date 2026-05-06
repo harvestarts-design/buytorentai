@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from "react";
 import { AlertTriangle, BarChart3, Calculator, DollarSign, Percent, Target } from 'lucide-react';
 import { analyzeDeal, getDealGrade } from '@/lib/calculations'; import { formatCurrency } from '@/lib/format'; import { Card, Metric, ScoreBadge } from '@/components/ui';
 function Input({label,value,onChange,prefix,suffix,step='1'}:{label:string;value:number;onChange:(v:number)=>void;prefix?:string;suffix?:string;step?:string}){return <label className="block"><span className="mb-1 block text-xs text-stone-400">{label}</span><div className="flex items-center rounded-2xl bg-white px-3 text-stone-950">{prefix&&<span className="text-stone-500">{prefix}</span>}<input type="number" step={step} value={value} onChange={e=>onChange(Number(e.target.value))} className="min-h-11 w-full bg-transparent px-2 outline-none" />{suffix&&<span className="text-stone-500">{suffix}</span>}</div></label>}
