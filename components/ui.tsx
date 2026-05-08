@@ -56,7 +56,11 @@ export function Metric({
   return (
     <div className="rounded-3xl bg-white/10 p-4">
       <div className="text-xs text-slate-200">{label}</div>
-      <div className={`mt-1 text-2xl font-black ${highlight ? "text-[#16B7C9]" : "text-white"}`}>
+      <div
+        className={`mt-1 text-2xl font-black ${
+          highlight ? "text-[#16B7C9]" : "text-white"
+        }`}
+      >
         {value}
       </div>
     </div>
