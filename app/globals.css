@@ -11,12 +11,85 @@ html {
 }
 
 body {
-  background: #ffffff;
-  color: #062a55;
+  background: #ffffff !important;
+  color: #062a55 !important;
 }
 
 input,
 select,
 textarea {
   color-scheme: light;
+}
+
+/* Force main site background to white */
+.bg-stone-950,
+.bg-stone-950\/85,
+.bg-stone-950\/70,
+.bg-stone-950\/60 {
+  background-color: #ffffff !important;
+}
+
+/* Make primary dark containers navy */
+.bg-white\/5,
+.bg-white\/10,
+.bg-orange-400\/10,
+.bg-orange-500\/20,
+.bg-green-400\/20 {
+  background-color: #062a55 !important;
+  color: #ffffff !important;
+}
+
+/* Make orange/green accents teal */
+.bg-orange-500,
+.hover\:bg-orange-600:hover,
+.bg-green-400\/20 {
+  background-color: #16b7c9 !important;
+}
+
+.text-orange-100,
+.text-orange-200,
+.text-orange-300,
+.text-orange-400,
+.text-green-300 {
+  color: #16b7c9 !important;
+}
+
+.border-orange-400\/20,
+.border-orange-400\/30,
+.border-white\/10,
+.border-white\/20 {
+  border-color: rgba(22, 183, 201, 0.25) !important;
+}
+
+/* Main text colors on white background */
+.text-stone-300,
+.text-stone-400,
+.text-stone-500,
+.text-slate-300,
+.text-slate-400,
+.text-slate-500 {
+  color: #475569 !important;
+}
+
+.text-white {
+  color: #ffffff !important;
+}
+
+/* Keep page headings navy when they are outside dark cards */
+main > div h1,
+section h1,
+section h2 {
+  color: #062a55;
+}
+
+/* Buttons */
+button.bg-orange-500,
+a.bg-orange-500 {
+  background-color: #16b7c9 !important;
+  color: #ffffff !important;
+}
+
+button.bg-orange-500:hover,
+a.bg-orange-500:hover {
+  background-color: #119aa9 !important;
 }
