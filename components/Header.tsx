@@ -1,15 +1,25 @@
+"use client";
+
 import Link from "next/link";
-import { Home } from "lucide-react";
+import { Home, ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 const nav = [
   { href: "/", label: "Home" },
   { href: "/analyzer", label: "Deal Analyzer" },
+  { href: "/mortgage-estimator", label: "Mortgage Estimator" },
   { href: "/markets", label: "Market Finder" },
   { href: "/alerts", label: "Deal Alerts" },
+];
+
+const learnMoreNav = [
   { href: "/early-access", label: "Early Access" },
+  { href: "/partners", label: "For Partners" },
 ];
 
 export function Header() {
+  const [open, setOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
@@ -22,9 +32,7 @@ export function Header() {
             <div className="text-xl font-bold tracking-tight text-[#062A55]">
               BuyToRent AI
             </div>
-            <div className="text-xs text-slate-500">
-              Buy low. Rent high.
-            </div>
+            <div className="text-xs text-slate-500">Buy low. Rent high.</div>
           </div>
         </Link>
 
@@ -38,6 +46,32 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setOpen((current) => !current)}
+              className="inline-flex items-center gap-1 rounded-xl px-4 py-2 text-sm font-semibold text-[#062A55] transition hover:bg-white hover:text-[#16B7C9]"
+            >
+              Learn More
+              <ChevronDown className="h-4 w-4" />
+            </button>
+
+            {open && (
+              <div className="absolute right-0 top-12 w-52 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl">
+                {learnMoreNav.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-xl px-4 py-3 text-sm font-semibold text-[#062A55] transition hover:bg-slate-100 hover:text-[#16B7C9]"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </nav>
 
         <Link
