@@ -101,32 +101,34 @@ export function MarketFinder() {
   const downPaymentAmount = targetPurchasePrice * (downPaymentPct / 100);
   const loanAmount = targetPurchasePrice - downPaymentAmount;
 
-  const filteredAndRankedMarkets = useMemo(() => {
-    return sampleMarkets
-      .map((market) => {
-        const personalizedScore = calculateMarketFitScore({
-          marketPrice: market.price,
-          marketRent: market.rent,
-          marketYield: market.yield,
-          baseScore: market.score,
-          targetPurchasePrice,
-          desiredRent,
-        });
+const filteredAndRankedMarkets = useMemo(() => {
+  return sampleMarkets
+    .map((market) => {
+      const personalizedScore = calculateMarketFitScore({
+        marketPrice: market.price,
+        marketRent: market.rent,
+        marketYield: market.yield,
+        baseScore: market.score,
+        targetPurchasePrice,
+        desiredRent,
+      });
 
-        const estimatedCashBeforeOtherExpenses = market.rent - monthlyPayment;
+      const estimatedCashBeforeOtherExpenses = market.rent - monthlyPayment;
 
-        return {
-          ...market,
-          personalizedScore,
-          estimatedCashBeforeOtherExpenses,
-          purchaseMatch: market.price <= targetPurchasePrice,
-          rentMatch: market.rent >= desiredRent,
-          yieldMatch: market.yield >= minimumYield,
-        };
-      })
-      .filter((market) => market.yield >= minimumYield)
-      .sort((a, b) => b.personalizedScore - a.personalizedScore);
-  }, [targetPurchasePrice, desiredRent, minimumYield, monthlyPayment]);
+      return {
+        ...market,
+        personalizedScore,
+        estimatedCashBeforeOtherExpenses,
+        purchaseMatch: market.price <= targetPurchasePrice,
+        rentMatch: market.rent >= desiredRent,
+        yieldMatch: market.yield >= minimumYield,
+      };
+    })
+    .filter((market) => market.price <= targetPurchasePrice)
+    .filter((market) => market.rent >= desiredRent)
+    .filter((market) => market.yield >= minimumYield)
+    .sort((a, b) => b.personalizedScore - a.personalizedScore);
+}, [targetPurchasePrice, desiredRent, minimumYield, monthlyPayment]);
 
   const topMarket = filteredAndRankedMarkets[0];
 
