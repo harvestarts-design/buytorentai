@@ -256,13 +256,9 @@ export function MarketFinder() {
           activeMinimumYield,
         });
 
-        const estimatedCashBeforeOtherExpenses =
-          monthlyPayment !== null ? market.rent - monthlyPayment : null;
-
         return {
           ...market,
           personalizedScore,
-          estimatedCashBeforeOtherExpenses,
           purchaseMatch:
             activePurchasePrice === null || market.price <= activePurchasePrice,
           rentMatch:
@@ -294,7 +290,6 @@ export function MarketFinder() {
     activePurchasePrice,
     activeDesiredRent,
     activeMinimumYield,
-    monthlyPayment,
   ]);
 
   const topMarket = filteredAndRankedMarkets[0];
@@ -303,9 +298,9 @@ export function MarketFinder() {
     activeSearchType === "purchase" && activePurchasePrice
       ? `Showing markets with median purchase prices at or below ${formatCurrency(
           activePurchasePrice
-        )}. Down payment and interest rate refine the estimated mortgage impact.`
+        )}. Down payment and interest rate are used only to estimate mortgage impact.`
       : activeSearchType === "rent" && activeDesiredRent
-      ? `Showing markets with estimated monthly rent at or above ${formatCurrency(
+      ? `Showing markets with estimated gross monthly rent at or above ${formatCurrency(
           activeDesiredRent
         )}${
           activeMinimumYield
@@ -328,7 +323,7 @@ export function MarketFinder() {
           </h1>
 
           <p className="mt-3 max-w-3xl text-slate-700">
-            Compare rental markets by purchase price, estimated rent, gross
+            Compare rental markets by purchase price, gross monthly rent, gross
             yield, vacancy risk, renter demand, and BuyToRent Score.
           </p>
         </div>
@@ -434,14 +429,14 @@ export function MarketFinder() {
             </div>
 
             <p className="mb-5 text-sm leading-6 text-slate-200">
-              Enter your desired monthly rental income to find markets with
+              Enter your desired gross monthly rental income to find markets with
               rents at or above that target. Minimum gross yield is optional and
               further refines the output.
             </p>
 
             <div className="grid gap-4">
               <Input
-                label="Desired monthly rental income"
+                label="Desired gross monthly rent"
                 value={rentInput}
                 onChange={setRentInput}
                 onEnter={runRentSearch}
@@ -476,7 +471,7 @@ export function MarketFinder() {
                 </div>
 
                 <p className="text-sm leading-6 text-slate-200">
-                  Showing markets with estimated monthly rent at or above{" "}
+                  Showing markets with estimated gross monthly rent at or above{" "}
                   <span className="font-bold text-white">
                     {formatCurrency(activeDesiredRent)}
                   </span>
@@ -551,8 +546,9 @@ export function MarketFinder() {
                 />
 
                 <Metric
-                  label="Est. rent"
+                  label="Gross monthly rent"
                   value={formatCurrency(topMarket.rent)}
+                  highlight
                 />
 
                 <Metric
@@ -561,20 +557,7 @@ export function MarketFinder() {
                   highlight
                 />
 
-                <Metric
-                  label={monthlyPayment !== null ? "Rent minus mortgage" : "Demand"}
-                  value={
-                    monthlyPayment !== null &&
-                    topMarket.estimatedCashBeforeOtherExpenses !== null
-                      ? formatCurrency(topMarket.estimatedCashBeforeOtherExpenses)
-                      : topMarket.renterDemand
-                  }
-                  highlight={
-                    monthlyPayment !== null &&
-                    topMarket.estimatedCashBeforeOtherExpenses !== null &&
-                    topMarket.estimatedCashBeforeOtherExpenses > 0
-                  }
-                />
+                <Metric label="Demand" value={topMarket.renterDemand} />
               </div>
             </Card>
           ) : (
@@ -593,7 +576,9 @@ export function MarketFinder() {
           <Card className="p-6 lg:p-8">
             <div className="mb-6 flex items-center gap-3">
               <Building2 className="h-6 w-6 text-[#16B7C9]" />
-              <h2 className="text-2xl font-black text-white">Market rankings</h2>
+              <h2 className="text-2xl font-black text-white">
+                Market rankings
+              </h2>
             </div>
 
             <div className="overflow-hidden rounded-3xl border border-white/10">
@@ -602,7 +587,7 @@ export function MarketFinder() {
                   <tr>
                     <th className="px-4 py-3">Market</th>
                     <th className="px-4 py-3">Price</th>
-                    <th className="px-4 py-3">Rent</th>
+                    <th className="px-4 py-3">Gross Rent</th>
                     <th className="px-4 py-3">Yield</th>
                     <th className="px-4 py-3">Demand</th>
                     <th className="px-4 py-3">Risk</th>
