@@ -64,10 +64,10 @@ function Input({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-xs text-stone-400">{label}</span>
+      <span className="mb-1 block text-xs text-slate-200">{label}</span>
 
-      <div className="flex items-center rounded-2xl bg-white px-3 text-stone-950">
-        {prefix && <span className="text-stone-500">{prefix}</span>}
+      <div className="flex items-center rounded-2xl bg-white px-3 text-[#062A55]">
+        {prefix && <span className="text-slate-500">{prefix}</span>}
 
         <input
           type="number"
@@ -81,7 +81,7 @@ function Input({
           className="min-h-11 w-full bg-transparent px-2 outline-none"
         />
 
-        {suffix && <span className="text-stone-500">{suffix}</span>}
+        {suffix && <span className="text-slate-500">{suffix}</span>}
       </div>
     </label>
   );
@@ -315,18 +315,19 @@ export function MarketFinder() {
       : "Showing all sample markets. Use either purchase assumptions or rental income target to personalize the results.";
 
   return (
-    <main className="mx-auto max-w-7xl px-6 py-10 lg:px-8 lg:py-14">
+    <main className="mx-auto max-w-7xl px-6 py-10 text-[#062A55] lg:px-8 lg:py-14">
       <div className="mb-8 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
         <div>
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-orange-400/30 bg-orange-400/10 px-4 py-2 text-sm text-orange-100">
-            <MapPin className="h-4 w-4" /> BuyToRent AI Market Finder
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#16B7C9]/30 bg-[#16B7C9]/10 px-4 py-2 text-sm font-semibold text-[#062A55]">
+            <MapPin className="h-4 w-4 text-[#16B7C9]" />
+            BuyToRent AI Market Finder
           </div>
 
-          <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
+          <h1 className="text-4xl font-black tracking-tight text-[#062A55] sm:text-5xl">
             Find low-price, high-rent markets.
           </h1>
 
-          <p className="mt-3 max-w-3xl text-stone-300">
+          <p className="mt-3 max-w-3xl text-slate-700">
             Compare rental markets by purchase price, estimated rent, gross
             yield, vacancy risk, renter demand, and BuyToRent Score.
           </p>
@@ -341,13 +342,13 @@ export function MarketFinder() {
         <div className="space-y-6">
           <Card className="p-6 lg:p-8">
             <div className="mb-5 flex items-center gap-3">
-              <Home className="h-6 w-6 text-orange-300" />
+              <Home className="h-6 w-6 text-[#16B7C9]" />
               <h2 className="text-2xl font-black text-white">
                 Purchase assumptions
               </h2>
             </div>
 
-            <p className="mb-5 text-sm leading-6 text-stone-400">
+            <p className="mb-5 text-sm leading-6 text-slate-200">
               Enter a desired or maximum purchase price to find markets that fit
               your budget. Down payment and interest rate are optional and help
               estimate mortgage impact.
@@ -385,7 +386,7 @@ export function MarketFinder() {
 
             <button
               onClick={runPurchaseSearch}
-              className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-orange-500 px-6 font-bold text-white transition hover:bg-orange-600"
+              className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-[#16B7C9] px-6 font-bold text-white transition hover:bg-[#119AA9]"
             >
               <Search className="mr-2 h-4 w-4" />
               Search by purchase price
@@ -424,15 +425,15 @@ export function MarketFinder() {
             )}
           </Card>
 
-          <Card className="border-orange-400/20 bg-orange-400/10 p-6 lg:p-8">
+          <Card className="p-6 lg:p-8">
             <div className="mb-5 flex items-center gap-3">
-              <DollarSign className="h-6 w-6 text-orange-300" />
+              <DollarSign className="h-6 w-6 text-[#16B7C9]" />
               <h2 className="text-2xl font-black text-white">
                 Rental income target
               </h2>
             </div>
 
-            <p className="mb-5 text-sm leading-6 text-stone-300">
+            <p className="mb-5 text-sm leading-6 text-slate-200">
               Enter your desired monthly rental income to find markets with
               rents at or above that target. Minimum gross yield is optional and
               further refines the output.
@@ -461,20 +462,20 @@ export function MarketFinder() {
 
             <button
               onClick={runRentSearch}
-              className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-orange-500 px-6 font-bold text-white transition hover:bg-orange-600"
+              className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-[#16B7C9] px-6 font-bold text-white transition hover:bg-[#119AA9]"
             >
               <Search className="mr-2 h-4 w-4" />
               Search by rental income
             </button>
 
             {activeSearchType === "rent" && activeDesiredRent && (
-              <div className="mt-6 rounded-3xl bg-stone-950/70 p-5">
-                <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-orange-100">
-                  <Calculator className="h-4 w-4 text-orange-300" />
+              <div className="mt-6 rounded-3xl bg-white/10 p-5">
+                <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-100">
+                  <Calculator className="h-4 w-4 text-[#16B7C9]" />
                   Active rental search
                 </div>
 
-                <p className="text-sm leading-6 text-stone-300">
+                <p className="text-sm leading-6 text-slate-200">
                   Showing markets with estimated monthly rent at or above{" "}
                   <span className="font-bold text-white">
                     {formatCurrency(activeDesiredRent)}
@@ -497,7 +498,7 @@ export function MarketFinder() {
 
           <Card className="p-6 lg:p-8">
             <div className="mb-3 flex items-center gap-3">
-              <Percent className="h-6 w-6 text-orange-300" />
+              <Percent className="h-6 w-6 text-[#16B7C9]" />
               <h2 className="text-2xl font-black text-white">
                 Matching markets
               </h2>
@@ -507,14 +508,14 @@ export function MarketFinder() {
               {filteredAndRankedMarkets.length}
             </div>
 
-            <p className="mt-3 text-sm leading-6 text-stone-300">
+            <p className="mt-3 text-sm leading-6 text-slate-200">
               {searchDescription}
             </p>
 
             {activeSearchType !== "default" && (
               <button
                 onClick={resetSearch}
-                className="mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/20 bg-white/5 px-5 text-sm font-bold text-white transition hover:bg-white/10"
+                className="mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl border border-white/20 bg-white/10 px-5 text-sm font-bold text-white transition hover:bg-white/20"
               >
                 Reset search
               </button>
@@ -524,10 +525,10 @@ export function MarketFinder() {
 
         <div className="space-y-6">
           {topMarket ? (
-            <Card className="border-orange-400/20 bg-orange-400/10 p-6 lg:p-8">
+            <Card className="p-6 lg:p-8">
               <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-start">
                 <div>
-                  <div className="mb-2 text-sm text-orange-100">
+                  <div className="mb-2 text-sm font-semibold text-[#16B7C9]">
                     Top personalized match
                   </div>
 
@@ -535,7 +536,7 @@ export function MarketFinder() {
                     {topMarket.market}
                   </h2>
 
-                  <p className="mt-3 max-w-2xl leading-7 text-stone-300">
+                  <p className="mt-3 max-w-2xl leading-7 text-slate-200">
                     {topMarket.note}
                   </p>
                 </div>
@@ -582,7 +583,7 @@ export function MarketFinder() {
                 No markets match yet
               </h2>
 
-              <p className="mt-3 text-stone-300">
+              <p className="mt-3 text-slate-200">
                 Try increasing your purchase price, lowering your desired rent,
                 or removing your minimum gross yield.
               </p>
@@ -591,13 +592,13 @@ export function MarketFinder() {
 
           <Card className="p-6 lg:p-8">
             <div className="mb-6 flex items-center gap-3">
-              <Building2 className="h-6 w-6 text-orange-300" />
+              <Building2 className="h-6 w-6 text-[#16B7C9]" />
               <h2 className="text-2xl font-black text-white">Market rankings</h2>
             </div>
 
             <div className="overflow-hidden rounded-3xl border border-white/10">
               <table className="w-full text-left text-sm">
-                <thead className="bg-white/10 text-stone-300">
+                <thead className="bg-white/10 text-slate-200">
                   <tr>
                     <th className="px-4 py-3">Market</th>
                     <th className="px-4 py-3">Price</th>
@@ -613,11 +614,11 @@ export function MarketFinder() {
                   {filteredAndRankedMarkets.map((row) => (
                     <tr
                       key={row.market}
-                      className="border-t border-white/10 text-stone-100"
+                      className="border-t border-white/10 text-slate-100"
                     >
                       <td className="px-4 py-4 font-semibold">
                         <span className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4 text-orange-400" />
+                          <MapPin className="h-4 w-4 text-[#16B7C9]" />
                           {row.market}
                         </span>
                       </td>
@@ -628,7 +629,7 @@ export function MarketFinder() {
                       <td className="px-4 py-4">{row.renterDemand}</td>
                       <td className="px-4 py-4">{row.risk}</td>
                       <td className="px-4 py-4">
-                        <span className="rounded-full bg-green-400/20 px-3 py-1 font-bold text-green-300">
+                        <span className="rounded-full bg-[#16B7C9]/20 px-3 py-1 font-bold text-[#16B7C9]">
                           {row.personalizedScore}
                         </span>
                       </td>
@@ -639,7 +640,7 @@ export function MarketFinder() {
                     <tr>
                       <td
                         colSpan={7}
-                        className="px-4 py-8 text-center text-stone-400"
+                        className="px-4 py-8 text-center text-slate-300"
                       >
                         No markets match your current search.
                       </td>
@@ -654,33 +655,35 @@ export function MarketFinder() {
 
       <div className="mt-6 grid gap-6 lg:grid-cols-3">
         <Card className="p-6">
-          <TrendingUp className="mb-4 h-7 w-7 text-orange-300" />
+          <TrendingUp className="mb-4 h-7 w-7 text-[#16B7C9]" />
 
-          <h3 className="text-xl font-black">Personalized rankings</h3>
+          <h3 className="text-xl font-black text-white">
+            Personalized rankings
+          </h3>
 
-          <p className="mt-2 text-stone-300">
+          <p className="mt-2 text-slate-200">
             Users can search by purchase price or rental income independently.
             Additional inputs refine the output.
           </p>
         </Card>
 
         <Card className="p-6">
-          <ShieldCheck className="mb-4 h-7 w-7 text-orange-300" />
+          <ShieldCheck className="mb-4 h-7 w-7 text-[#16B7C9]" />
 
-          <h3 className="text-xl font-black">Risk layer</h3>
+          <h3 className="text-xl font-black text-white">Risk layer</h3>
 
-          <p className="mt-2 text-stone-300">
+          <p className="mt-2 text-slate-200">
             Cheap properties can hide vacancy, repairs, taxes, insurance, or
             resale risk.
           </p>
         </Card>
 
         <Card className="p-6">
-          <Bell className="mb-4 h-7 w-7 text-orange-300" />
+          <Bell className="mb-4 h-7 w-7 text-[#16B7C9]" />
 
-          <h3 className="text-xl font-black">Deal alerts</h3>
+          <h3 className="text-xl font-black text-white">Deal alerts</h3>
 
-          <p className="mt-2 text-stone-300">
+          <p className="mt-2 text-slate-200">
             Users can save a buy box and get notified when matching properties
             appear.
           </p>
