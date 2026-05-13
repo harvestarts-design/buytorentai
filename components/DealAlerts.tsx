@@ -1,2 +1,158 @@
-import { ArrowRight, Bell, Clock, Mail, MapPin, Target, Zap } from 'lucide-react'; import { sampleProperties } from '@/lib/sampleData'; import { formatCurrency } from '@/lib/format'; import { Button, Card, Metric, ScoreBadge } from '@/components/ui';
-export function DealAlerts(){const matchedDeals=sampleProperties.filter(p=>p.price<=175000&&p.rent>=1400&&p.cashFlow>=200&&p.score>=75); return <main className="mx-auto max-w-7xl px-6 py-10 lg:px-8 lg:py-14"><div className="mb-8 flex flex-col justify-between gap-5 lg:flex-row lg:items-end"><div><div className="mb-3 inline-flex items-center gap-2 rounded-full border border-orange-400/30 bg-orange-400/10 px-4 py-2 text-sm text-orange-100"><Bell className="h-4 w-4"/>BuyToRent AI Deal Alerts</div><h1 className="text-4xl font-black tracking-tight sm:text-5xl">Build your rental buy box.</h1><p className="mt-3 max-w-3xl text-stone-300">Tell BuyToRent AI what kind of rental deal you want. The production version would watch live listings and notify you when matching properties appear.</p></div><Button href="/markets">Explore markets <ArrowRight className="ml-2 h-4 w-4"/></Button></div><div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]"><Card className="p-6 lg:p-8"><div className="mb-5 flex items-center gap-3"><Target className="h-6 w-6 text-orange-300"/><h2 className="text-2xl font-black text-white">Sample saved buy box</h2></div><div className="grid gap-3 sm:grid-cols-2"><Metric label="Max purchase price" value="$175,000"/><Metric label="Minimum rent" value="$1,400"/><Metric label="Minimum cash flow" value="$200"/><Metric label="Minimum score" value="75+"/></div><div className="mt-6 rounded-3xl bg-stone-950/70 p-5"><div className="mb-3 flex items-center gap-2 text-sm font-semibold text-stone-200"><Zap className="h-4 w-4 text-orange-400"/>Alert rule preview</div><p className="text-sm leading-6 text-stone-300">Notify me when a rental property is under $175,000, rents for at least $1,400/mo, cash flows above $200/mo, and scores 75+.</p><Button href="/early-access" className="mt-5 w-full"><Mail className="mr-2 h-4 w-4"/>Save alert</Button></div></Card><div className="space-y-6"><Card className="border-orange-400/20 bg-orange-400/10 p-6 lg:p-8"><div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-start"><div><div className="mb-2 text-sm text-orange-100">Matching sample deals</div><h2 className="text-4xl font-black text-white">{matchedDeals.length}</h2><p className="mt-3 max-w-2xl leading-7 text-stone-300">These sample properties match your current buy box. In the full product, this would update from live listing and rental estimate data.</p></div><div className="rounded-2xl bg-white/10 px-4 py-3 text-center"><div className="text-xs text-stone-300">Alert frequency</div><div className="flex items-center gap-2 text-xl font-black text-white"><Clock className="h-5 w-5 text-orange-300"/>Daily</div></div></div></Card><div className="grid gap-4">{matchedDeals.map(deal=><Card key={`${deal.address}-${deal.market}`} className="p-5 transition hover:bg-white/10"><div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start"><div><div className="mb-2 inline-flex items-center rounded-full bg-green-400/20 px-3 py-1 text-xs font-bold text-green-300">{deal.status}</div><h3 className="text-xl font-black text-white">{deal.address}</h3><p className="mt-1 flex items-center gap-2 text-sm text-stone-300"><MapPin className="h-4 w-4 text-orange-400"/>{deal.market} · {deal.type} · {deal.beds} bd / {deal.baths} ba</p></div><ScoreBadge score={deal.score}/></div><div className="mt-5 grid gap-3 sm:grid-cols-4"><Metric label="Price" value={formatCurrency(deal.price)}/><Metric label="Rent" value={formatCurrency(deal.rent)}/><Metric label="Cash flow" value={formatCurrency(deal.cashFlow)} highlight/><Metric label="Gross yield" value={`${deal.yield.toFixed(1)}%`}/></div></Card>)}</div></div></div></main>}
+import {
+  ArrowRight,
+  Bell,
+  Clock,
+  Mail,
+  MapPin,
+  Target,
+  Zap,
+} from "lucide-react";
+import { sampleProperties } from "@/lib/sampleData";
+import { formatCurrency } from "@/lib/format";
+import { Button, Card, Metric, ScoreBadge } from "@/components/ui";
+
+export function DealAlerts() {
+  const matchedDeals = sampleProperties.filter(
+    (p) =>
+      p.price <= 175000 &&
+      p.rent >= 1400 &&
+      p.cashFlow >= 200 &&
+      p.score >= 75
+  );
+
+  return (
+    <main className="mx-auto max-w-7xl px-6 py-10 text-[#062A55] lg:px-8 lg:py-14">
+      <div className="mb-8 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+        <div>
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#16B7C9]/30 bg-[#16B7C9]/10 px-4 py-2 text-sm font-semibold text-[#062A55]">
+            <Bell className="h-4 w-4 text-[#16B7C9]" />
+            BuyToRent AI Deal Alerts
+          </div>
+
+          <h1 className="text-4xl font-black tracking-tight text-[#062A55] sm:text-5xl">
+            Build your rental buy box.
+          </h1>
+
+          <p className="mt-3 max-w-3xl text-slate-700">
+            Tell BuyToRent AI what kind of rental deal you want. The production
+            version would watch live listings and notify you when matching
+            properties appear.
+          </p>
+        </div>
+
+        <Button href="/markets">
+          Explore markets <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <Card className="p-6 lg:p-8">
+          <div className="mb-5 flex items-center gap-3">
+            <Target className="h-6 w-6 text-[#16B7C9]" />
+            <h2 className="text-2xl font-black text-white">
+              Sample saved buy box
+            </h2>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Metric label="Max purchase price" value="$175,000" />
+            <Metric label="Minimum rent" value="$1,400" />
+            <Metric label="Minimum cash flow" value="$200" />
+            <Metric label="Minimum score" value="75+" />
+          </div>
+
+          <div className="mt-6 rounded-3xl bg-white/10 p-5">
+            <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-100">
+              <Zap className="h-4 w-4 text-[#16B7C9]" />
+              Alert rule preview
+            </div>
+
+            <p className="text-sm leading-6 text-slate-200">
+              Notify me when a rental property is under $175,000, rents for at
+              least $1,400/mo, cash flows above $200/mo, and scores 75+.
+            </p>
+
+            <Button href="/early-access" className="mt-5 w-full">
+              <Mail className="mr-2 h-4 w-4" />
+              Save alert
+            </Button>
+          </div>
+        </Card>
+
+        <div className="space-y-6">
+          <Card className="p-6 lg:p-8">
+            <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-start">
+              <div>
+                <div className="mb-2 text-sm font-semibold text-[#16B7C9]">
+                  Matching sample deals
+                </div>
+
+                <h2 className="text-4xl font-black text-white">
+                  {matchedDeals.length}
+                </h2>
+
+                <p className="mt-3 max-w-2xl leading-7 text-slate-200">
+                  These sample properties match your current buy box. In the full
+                  product, this would update from live listing and rental
+                  estimate data.
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-white/10 px-4 py-3 text-center">
+                <div className="text-xs text-slate-300">Alert frequency</div>
+
+                <div className="flex items-center gap-2 text-xl font-black text-white">
+                  <Clock className="h-5 w-5 text-[#16B7C9]" />
+                  Daily
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          <div className="grid gap-4">
+            {matchedDeals.map((deal) => (
+              <Card
+                key={`${deal.address}-${deal.market}`}
+                className="p-5 transition hover:border-[#16B7C9]/40"
+              >
+                <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
+                  <div>
+                    <div className="mb-2 inline-flex items-center rounded-full bg-[#16B7C9]/20 px-3 py-1 text-xs font-bold text-[#16B7C9]">
+                      {deal.status}
+                    </div>
+
+                    <h3 className="text-xl font-black text-white">
+                      {deal.address}
+                    </h3>
+
+                    <p className="mt-1 flex items-center gap-2 text-sm text-slate-300">
+                      <MapPin className="h-4 w-4 text-[#16B7C9]" />
+                      {deal.market} · {deal.type} · {deal.beds} bd /{" "}
+                      {deal.baths} ba
+                    </p>
+                  </div>
+
+                  <ScoreBadge score={deal.score} />
+                </div>
+
+                <div className="mt-5 grid gap-3 sm:grid-cols-4">
+                  <Metric label="Price" value={formatCurrency(deal.price)} />
+                  <Metric label="Rent" value={formatCurrency(deal.rent)} />
+                  <Metric
+                    label="Cash flow"
+                    value={formatCurrency(deal.cashFlow)}
+                    highlight
+                  />
+                  <Metric
+                    label="Gross yield"
+                    value={`${deal.yield.toFixed(1)}%`}
+                  />
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
