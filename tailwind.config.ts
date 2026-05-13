@@ -1,3 +1,24 @@
-import type { Config } from 'tailwindcss';
-const config: Config = { content: ['./app/**/*.{js,ts,jsx,tsx,mdx}', './components/**/*.{js,ts,jsx,tsx,mdx}', './lib/**/*.{js,ts,jsx,tsx,mdx}'], theme: { extend: { colors: { brand: { orange: '#f97316', dark: '#0c0a09' } } } }, plugins: [] };
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          teal: "#16B7C9",
+          tealDark: "#119AA9",
+          navy: "#062A55",
+          white: "#FFFFFF",
+        },
+      },
+    },
+  },
+  plugins: [],
+};
+
 export default config;
