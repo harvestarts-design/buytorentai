@@ -13,11 +13,7 @@ import { Button, Card, Metric, ScoreBadge } from "@/components/ui";
 
 export function DealAlerts() {
   const matchedDeals = sampleProperties.filter(
-    (p) =>
-      p.price <= 175000 &&
-      p.rent >= 1400 &&
-      p.cashFlow >= 200 &&
-      p.score >= 75
+    (p) => p.price <= 175000 && p.rent >= 1400 && p.score >= 75
   );
 
   return (
@@ -56,8 +52,8 @@ export function DealAlerts() {
 
           <div className="grid gap-3 sm:grid-cols-2">
             <Metric label="Max purchase price" value="$175,000" />
-            <Metric label="Minimum rent" value="$1,400" />
-            <Metric label="Minimum cash flow" value="$200" />
+            <Metric label="Minimum gross monthly rent" value="$1,400" />
+            <Metric label="Minimum gross yield" value="10%+" />
             <Metric label="Minimum score" value="75+" />
           </div>
 
@@ -68,8 +64,9 @@ export function DealAlerts() {
             </div>
 
             <p className="text-sm leading-6 text-slate-200">
-              Notify me when a rental property is under $175,000, rents for at
-              least $1,400/mo, cash flows above $200/mo, and scores 75+.
+              Notify me when a rental property is under $175,000, has projected
+              gross monthly rent of at least $1,400, meets the target gross
+              yield, and scores 75+.
             </p>
 
             <Button href="/early-access" className="mt-5 w-full">
@@ -137,16 +134,20 @@ export function DealAlerts() {
 
                 <div className="mt-5 grid gap-3 sm:grid-cols-4">
                   <Metric label="Price" value={formatCurrency(deal.price)} />
-                  <Metric label="Rent" value={formatCurrency(deal.rent)} />
+
                   <Metric
-                    label="Cash flow"
-                    value={formatCurrency(deal.cashFlow)}
+                    label="Gross monthly rent"
+                    value={formatCurrency(deal.rent)}
                     highlight
                   />
+
                   <Metric
                     label="Gross yield"
                     value={`${deal.yield.toFixed(1)}%`}
+                    highlight
                   />
+
+                  <Metric label="Score" value={`${deal.score}`} />
                 </div>
               </Card>
             ))}
