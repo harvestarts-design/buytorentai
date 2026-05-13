@@ -57,7 +57,7 @@ export default function HomePage() {
 
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-[#16B7C9]" />
-                  Cash-flow math
+                  Rent-to-price math
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -82,10 +82,14 @@ export default function HomePage() {
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                <Metric label="Purchase price" value={formatCurrency(150000)} />
-                <Metric label="Estimated rent" value={formatCurrency(1600)} />
-                <Metric label="Gross yield" value="12.8%" />
-                <Metric label="Monthly gross monthly rent" value="$238" highlight />
+                <Metric label="Purchase price" value={formatCurrency(90000)} />
+                <Metric
+                  label="Gross monthly rent"
+                  value={formatCurrency(1500)}
+                  highlight
+                />
+                <Metric label="Gross yield" value="20.0%" highlight />
+                <Metric label="Avg. tax rate" value="1.9%" />
               </div>
 
               <div className="mt-5 rounded-3xl bg-white/10 p-4">
@@ -95,7 +99,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="space-y-2 text-sm text-slate-200">
-                  <p>Is this property likely to gross monthly rent?</p>
+                  <p>Is the rent strong enough compared to the purchase price?</p>
                   <p>What price should I offer to hit my target return?</p>
                   <p>Which markets have low prices and strong rents?</p>
                 </div>
@@ -132,7 +136,8 @@ export default function HomePage() {
             <h3 className="text-xl font-black text-white">Deal Analyzer</h3>
             <p className="mt-3 leading-7 text-slate-200">
               Estimate mortgage, taxes, insurance, vacancy, repairs,
-              management, gross monthly rent, cap rate, and cash-on-cash return.
+              management, gross yield, cap rate, and estimated cash-on-cash
+              return.
             </p>
           </Card>
 
@@ -141,7 +146,7 @@ export default function HomePage() {
             <h3 className="text-xl font-black text-white">Deal Alerts</h3>
             <p className="mt-3 leading-7 text-slate-200">
               Get notified when a property matches your buy box, target rent,
-              and cash-flow requirements.
+              and rent-to-price criteria.
             </p>
           </Card>
         </div>
@@ -156,8 +161,9 @@ export default function HomePage() {
             </h3>
             <p className="mt-4 text-slate-200">
               Instead of forcing you to piece together listings, rent comps,
-              mortgage calculators, and spreadsheets, BuyToRent AI shows whether
-              a property is likely to gross monthly rent in one place.
+              mortgage calculators, and spreadsheets, BuyToRent AI helps you
+              compare price, rent potential, yield, and market risk in one
+              place.
             </p>
           </Card>
 
