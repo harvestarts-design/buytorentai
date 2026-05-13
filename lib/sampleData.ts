@@ -9,7 +9,8 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.8,
     renterDemand: "High",
-    note: "Strong rent-to-price ratio with large renter base.",
+    avgTaxRate: 2.1,
+    note: "Strong rent-to-price ratio with a large renter base.",
   },
   {
     market: "Birmingham, AL",
@@ -21,7 +22,8 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.2,
     renterDemand: "High",
-    note: "Good cash-flow profile with landlord-friendly dynamics.",
+    avgTaxRate: 0.7,
+    note: "Good gross yield profile with landlord-friendly dynamics.",
   },
   {
     market: "Memphis, TN",
@@ -33,6 +35,7 @@ export const sampleMarkets = [
     risk: "Higher",
     vacancy: 8.5,
     renterDemand: "High",
+    avgTaxRate: 1.2,
     note: "Strong rental demand, but management and neighborhood selection matter.",
   },
   {
@@ -45,6 +48,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.8,
     renterDemand: "Medium",
+    avgTaxRate: 2.5,
     note: "Low entry price and attractive gross yield.",
   },
   {
@@ -57,19 +61,21 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.0,
     renterDemand: "Medium",
+    avgTaxRate: 0.6,
     note: "Good yield with coastal insurance diligence needed.",
   },
   {
     market: "Detroit, MI",
     region: "Midwest",
-    price: 95000,
-    rent: 1100,
-    yield: 13.9,
-    score: 78,
+    price: 90000,
+    rent: 1500,
+    yield: 20.0,
+    score: 86,
     risk: "Higher",
     vacancy: 9.2,
     renterDemand: "High",
-    note: "Very strong paper yield, but block-by-block risk is critical.",
+    avgTaxRate: 1.9,
+    note: "Very strong sample gross yield, but block-by-block risk is critical.",
   },
   {
     market: "Indianapolis, IN",
@@ -81,7 +87,8 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.5,
     renterDemand: "High",
-    note: "More stable market with slightly lower yield.",
+    avgTaxRate: 0.9,
+    note: "More stable market with slightly lower gross yield.",
   },
   {
     market: "Kansas City, MO",
@@ -93,6 +100,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.9,
     renterDemand: "Medium",
+    avgTaxRate: 1.4,
     note: "Good investor market, but pricing has moved up.",
   },
   {
@@ -105,6 +113,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.1,
     renterDemand: "Medium",
+    avgTaxRate: 1.0,
     note: "Affordable entry point with steady rental demand.",
   },
   {
@@ -117,7 +126,8 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.7,
     renterDemand: "Medium",
-    note: "Solid yield, but taxes and local rules need review.",
+    avgTaxRate: 2.7,
+    note: "Solid gross yield, but taxes and local rules need review.",
   },
   {
     market: "Buffalo, NY",
@@ -129,6 +139,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.9,
     renterDemand: "Medium",
+    avgTaxRate: 2.6,
     note: "Affordable housing stock with decent rental fundamentals.",
   },
   {
@@ -141,6 +152,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.0,
     renterDemand: "Medium",
+    avgTaxRate: 2.5,
     note: "Good rent-to-price profile with university and healthcare demand drivers.",
   },
   {
@@ -153,6 +165,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.4,
     renterDemand: "High",
+    avgTaxRate: 2.0,
     note: "Stable renter base with healthcare, education, and tech employment anchors.",
   },
   {
@@ -165,6 +178,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.3,
     renterDemand: "Medium",
+    avgTaxRate: 1.8,
     note: "Affordable entry prices and workable rental yield.",
   },
   {
@@ -177,6 +191,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.6,
     renterDemand: "High",
+    avgTaxRate: 1.7,
     note: "Larger metro with steady rental demand, though pricing is less discounted.",
   },
   {
@@ -189,6 +204,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.9,
     renterDemand: "Medium",
+    avgTaxRate: 2.1,
     note: "Low purchase prices can produce attractive paper yield.",
   },
   {
@@ -201,6 +217,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.6,
     renterDemand: "Medium",
+    avgTaxRate: 1.9,
     note: "Affordable market with potential for strong rent-to-price ratios.",
   },
   {
@@ -213,6 +230,7 @@ export const sampleMarkets = [
     risk: "Higher",
     vacancy: 9.5,
     renterDemand: "Medium",
+    avgTaxRate: 1.8,
     note: "High yield potential, but vacancy, resale, and property condition risk matter.",
   },
   {
@@ -225,6 +243,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.8,
     renterDemand: "High",
+    avgTaxRate: 2.2,
     note: "Larger Midwest market with good renter demand and moderate yields.",
   },
   {
@@ -237,6 +256,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.5,
     renterDemand: "High",
+    avgTaxRate: 1.4,
     note: "Strong investor activity with neighborhood-level underwriting required.",
   },
   {
@@ -249,6 +269,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.4,
     renterDemand: "Medium",
+    avgTaxRate: 0.8,
     note: "Affordable Southern market with reasonable rental demand.",
   },
   {
@@ -261,6 +282,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.0,
     renterDemand: "Medium",
+    avgTaxRate: 1.0,
     note: "Steady market, but yields may be thinner than smaller cities.",
   },
   {
@@ -273,6 +295,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.8,
     renterDemand: "Medium",
+    avgTaxRate: 1.0,
     note: "Stable rental demand with moderate affordability.",
   },
   {
@@ -285,6 +308,7 @@ export const sampleMarkets = [
     risk: "Higher",
     vacancy: 8.7,
     renterDemand: "Medium",
+    avgTaxRate: 0.9,
     note: "Attractive rent-to-price ratio, but market and property risk need diligence.",
   },
   {
@@ -297,6 +321,7 @@ export const sampleMarkets = [
     risk: "Higher",
     vacancy: 9.1,
     renterDemand: "Medium",
+    avgTaxRate: 0.9,
     note: "High gross yield potential with infrastructure and vacancy diligence needed.",
   },
   {
@@ -309,7 +334,8 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.5,
     renterDemand: "Medium",
-    note: "More stable Midwest market with moderate cash-flow potential.",
+    avgTaxRate: 0.9,
+    note: "More stable Midwest market with moderate rent-to-price potential.",
   },
   {
     market: "Evansville, IN",
@@ -321,6 +347,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.4,
     renterDemand: "Medium",
+    avgTaxRate: 0.9,
     note: "Low entry price and workable rent-to-price ratio.",
   },
   {
@@ -333,6 +360,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.2,
     renterDemand: "Medium",
+    avgTaxRate: 1.3,
     note: "Affordable market with steady rental demand.",
   },
   {
@@ -345,6 +373,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 5.9,
     renterDemand: "Medium",
+    avgTaxRate: 1.5,
     note: "More stable market, though affordability is less compelling.",
   },
   {
@@ -357,7 +386,8 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 5.8,
     renterDemand: "High",
-    note: "Stronger market quality but weaker pure cash-flow profile.",
+    avgTaxRate: 1.6,
+    note: "Stronger market quality but weaker pure gross yield profile.",
   },
   {
     market: "Lansing, MI",
@@ -369,6 +399,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.0,
     renterDemand: "Medium",
+    avgTaxRate: 1.8,
     note: "Affordable pricing with university and government demand anchors.",
   },
   {
@@ -381,6 +412,7 @@ export const sampleMarkets = [
     risk: "Higher",
     vacancy: 10.2,
     renterDemand: "Medium",
+    avgTaxRate: 1.8,
     note: "Very high paper yield, but high-risk underwriting is required.",
   },
   {
@@ -393,7 +425,8 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 5.6,
     renterDemand: "High",
-    note: "Strong economic fundamentals, but pricing can reduce cash-flow yield.",
+    avgTaxRate: 0.7,
+    note: "Strong economic fundamentals, but pricing can reduce gross yield.",
   },
   {
     market: "Montgomery, AL",
@@ -405,6 +438,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.8,
     renterDemand: "Medium",
+    avgTaxRate: 0.7,
     note: "Lower entry prices and solid rent-to-price ratio.",
   },
   {
@@ -417,6 +451,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.4,
     renterDemand: "Medium",
+    avgTaxRate: 0.9,
     note: "Affordable market with military and local employment demand drivers.",
   },
   {
@@ -429,6 +464,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 7.1,
     renterDemand: "Medium",
+    avgTaxRate: 0.9,
     note: "Steady renter base with moderate yield potential.",
   },
   {
@@ -441,7 +477,8 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.2,
     renterDemand: "High",
-    note: "Better market quality but thinner cash-flow math.",
+    avgTaxRate: 0.9,
+    note: "Better market quality but thinner gross yield math.",
   },
   {
     market: "Winston-Salem, NC",
@@ -453,7 +490,8 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.3,
     renterDemand: "Medium",
-    note: "Reasonable demand, but pricing may limit high cash-flow deals.",
+    avgTaxRate: 0.9,
+    note: "Reasonable demand, but pricing may limit high-yield deals.",
   },
   {
     market: "Columbia, SC",
@@ -465,6 +503,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.9,
     renterDemand: "Medium",
+    avgTaxRate: 0.8,
     note: "Affordable Southern market with student, military, and government demand.",
   },
   {
@@ -477,6 +516,7 @@ export const sampleMarkets = [
     risk: "Moderate",
     vacancy: 6.8,
     renterDemand: "Medium",
+    avgTaxRate: 0.8,
     note: "Growing secondary market with moderate rental yield.",
   },
 ];
@@ -491,8 +531,8 @@ export const sampleProperties = [
     beds: 3,
     baths: 1,
     score: 87,
-    cashFlow: 286,
     yield: 13.2,
+    avgTaxRate: 2.1,
     status: "New today",
   },
   {
@@ -504,8 +544,8 @@ export const sampleProperties = [
     beds: 3,
     baths: 2,
     score: 84,
-    cashFlow: 241,
     yield: 12.5,
+    avgTaxRate: 0.7,
     status: "2 days old",
   },
   {
@@ -517,8 +557,8 @@ export const sampleProperties = [
     beds: 4,
     baths: 2,
     score: 82,
-    cashFlow: 318,
     yield: 13.2,
+    avgTaxRate: 1.2,
     status: "New today",
   },
   {
@@ -530,8 +570,8 @@ export const sampleProperties = [
     beds: 2,
     baths: 1,
     score: 81,
-    cashFlow: 224,
     yield: 13.6,
+    avgTaxRate: 2.5,
     status: "4 days old",
   },
   {
@@ -543,21 +583,21 @@ export const sampleProperties = [
     beds: 3,
     baths: 2,
     score: 76,
-    cashFlow: 136,
     yield: 11.4,
+    avgTaxRate: 0.6,
     status: "6 days old",
   },
   {
     address: "4472 Grand Blvd",
     market: "Detroit, MI",
     type: "Single-family",
-    price: 87000,
-    rent: 1050,
+    price: 90000,
+    rent: 1500,
     beds: 3,
     baths: 1,
-    score: 74,
-    cashFlow: 198,
-    yield: 14.5,
+    score: 86,
+    yield: 20.0,
+    avgTaxRate: 1.9,
     status: "1 day old",
   },
   {
@@ -569,8 +609,8 @@ export const sampleProperties = [
     beds: 3,
     baths: 2,
     score: 73,
-    cashFlow: 118,
     yield: 10.9,
+    avgTaxRate: 0.9,
     status: "3 days old",
   },
 ];
