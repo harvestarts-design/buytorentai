@@ -12,29 +12,29 @@ import { formatCurrency } from "@/lib/format";
 
 const savedSearches = [
   {
-    name: "Cleveland cash-flow rentals",
+    name: "Cleveland high-yield rentals",
     markets: "Cleveland, OH",
     maxPrice: 175000,
     minRent: 1400,
-    minCashFlow: 200,
+    minYield: 10,
     matches: 12,
     frequency: "Daily",
   },
   {
-    name: "Southern 1% rule deals",
+    name: "Southern rent-to-price deals",
     markets: "Birmingham, Memphis, Mobile",
     maxPrice: 200000,
     minRent: 1500,
-    minCashFlow: 250,
+    minYield: 10,
     matches: 9,
     frequency: "Daily",
   },
   {
-    name: "Duplex opportunities",
+    name: "Duplex rental income targets",
     markets: "All target markets",
     maxPrice: 225000,
     minRent: 1800,
-    minCashFlow: 300,
+    minYield: 9,
     matches: 4,
     frequency: "Weekly",
   },
@@ -46,7 +46,7 @@ export default function EarlyAccessPage() {
       <div className="mb-8 grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#16B7C9]/30 bg-[#16B7C9]/10 px-4 py-2 text-sm font-semibold text-[#062A55]">
-            <UserPlus className="h-4 w-4" />
+            <UserPlus className="h-4 w-4 text-[#16B7C9]" />
             BuyToRent AI Early Access
           </div>
 
@@ -61,9 +61,9 @@ export default function EarlyAccessPage() {
             features like rental comps, mortgage estimates, market scoring, and
             deal alerts. If you’re looking to invest in real estate or build
             income through the rental market, BuyToRent AI helps you move faster
-            and make smarter decisions by comparing markets, estimating returns,
-            identifying potential cash-flow opportunities, and filtering out
-            deals that may not make financial sense. Early users may also
+            and make smarter decisions by comparing markets, estimating gross
+            monthly rent, identifying rent-to-price opportunities, and filtering
+            out deals that may not make financial sense. Early users may also
             receive beta access to new reports, priority feature updates, and
             discounted pricing when paid plans become available.
           </p>
@@ -89,7 +89,7 @@ export default function EarlyAccessPage() {
 
           <p className="mt-3 text-slate-200">
             Join the list to get product updates, sample reports, and first
-            access to live rental deal data.
+            access to live rental market and property data.
           </p>
 
           <form className="mt-6 grid gap-3">
@@ -130,8 +130,8 @@ export default function EarlyAccessPage() {
           <Bookmark className="mb-4 h-7 w-7 text-[#16B7C9]" />
           <h3 className="text-xl font-black text-white">Save searches</h3>
           <p className="mt-2 text-slate-200">
-            Users can save target markets, price limits, rent goals, and
-            cash-flow requirements.
+            Users can save target markets, price limits, gross rent goals, gross
+            yield targets, and rent-to-price criteria.
           </p>
         </Card>
 
@@ -139,7 +139,8 @@ export default function EarlyAccessPage() {
           <Bell className="mb-4 h-7 w-7 text-[#16B7C9]" />
           <h3 className="text-xl font-black text-white">Deal alerts</h3>
           <p className="mt-2 text-slate-200">
-            BuyToRent AI can notify users when new listings match their buy box.
+            BuyToRent AI can notify users when new listings match their buy box,
+            target rent, and gross yield goals.
           </p>
         </Card>
 
@@ -148,7 +149,7 @@ export default function EarlyAccessPage() {
           <h3 className="text-xl font-black text-white">Reports</h3>
           <p className="mt-2 text-slate-200">
             Future upgrade: downloadable market reports and property
-            underwriting summaries.
+            underwriting summaries using your own assumptions.
           </p>
         </Card>
       </div>
@@ -160,8 +161,8 @@ export default function EarlyAccessPage() {
               Saved search dashboard
             </h2>
             <p className="mt-2 text-slate-200">
-              This is the account area where users would manage saved searches
-              and alerts.
+              This is the account area where users would manage saved searches,
+              rental income targets, and alerts.
             </p>
           </div>
 
@@ -186,13 +187,10 @@ export default function EarlyAccessPage() {
                     value={formatCurrency(s.maxPrice)}
                   />
                   <MiniMetric
-                    label="Min rent"
+                    label="Min gross rent"
                     value={formatCurrency(s.minRent)}
                   />
-                  <MiniMetric
-                    label="Cash flow"
-                    value={formatCurrency(s.minCashFlow)}
-                  />
+                  <MiniMetric label="Min yield" value={`${s.minYield}%+`} />
                   <MiniMetric label="Matches" value={s.matches} />
                   <MiniMetric label="Alerts" value={s.frequency} />
                 </div>
@@ -216,8 +214,8 @@ export default function EarlyAccessPage() {
 
             <p className="mt-3 max-w-3xl leading-7 text-slate-200">
               Saved buy boxes, market watchlists, email alerts, downloadable
-              reports, saved properties, and eventually live integrations with
-              property/rent data providers.
+              reports, saved properties, rental comp tracking, and eventually
+              live integrations with property and rent data providers.
             </p>
           </div>
 
