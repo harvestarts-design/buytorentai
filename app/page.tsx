@@ -32,7 +32,7 @@ export default function HomePage() {
 
               <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-700">
                 BuyToRent AI helps rental investors find affordable markets,
-                analyze cash flow, and spot properties with strong rent
+                analyze gross monthly rent, and spot properties with strong rent
                 potential before they buy.
               </p>
 
@@ -74,7 +74,7 @@ export default function HomePage() {
                     Sample property score
                   </div>
                   <div className="text-2xl font-bold text-white">
-                    Cleveland rental
+                    Detroit rental
                   </div>
                 </div>
 
@@ -85,7 +85,7 @@ export default function HomePage() {
                 <Metric label="Purchase price" value={formatCurrency(150000)} />
                 <Metric label="Estimated rent" value={formatCurrency(1600)} />
                 <Metric label="Gross yield" value="12.8%" />
-                <Metric label="Monthly cash flow" value="$238" highlight />
+                <Metric label="Monthly gross monthly rent" value="$238" highlight />
               </div>
 
               <div className="mt-5 rounded-3xl bg-white/10 p-4">
@@ -95,7 +95,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="space-y-2 text-sm text-slate-200">
-                  <p>Is this property likely to cash flow?</p>
+                  <p>Is this property likely to gross monthly rent?</p>
                   <p>What price should I offer to hit my target return?</p>
                   <p>Which markets have low prices and strong rents?</p>
                 </div>
@@ -132,7 +132,7 @@ export default function HomePage() {
             <h3 className="text-xl font-black text-white">Deal Analyzer</h3>
             <p className="mt-3 leading-7 text-slate-200">
               Estimate mortgage, taxes, insurance, vacancy, repairs,
-              management, cash flow, cap rate, and cash-on-cash return.
+              management, gross monthly rent, cap rate, and cash-on-cash return.
             </p>
           </Card>
 
@@ -157,7 +157,7 @@ export default function HomePage() {
             <p className="mt-4 text-slate-200">
               Instead of forcing you to piece together listings, rent comps,
               mortgage calculators, and spreadsheets, BuyToRent AI shows whether
-              a property is likely to cash flow in one place.
+              a property is likely to gross monthly rent in one place.
             </p>
           </Card>
 
