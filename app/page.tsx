@@ -1,2 +1,193 @@
-import { ArrowRight, Bell, Calculator, CheckCircle2, Info, Search, ShieldCheck, TrendingUp } from 'lucide-react'; import { Button, Card, Metric, ScoreBadge } from '@/components/ui'; import { CTA } from '@/components/CTA'; import { formatCurrency } from '@/lib/format';
-export default function HomePage(){return <><section className="relative overflow-hidden"><div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(251,146,60,0.25),_transparent_36%),radial-gradient(circle_at_top_right,_rgba(34,197,94,0.18),_transparent_32%)]"/><div className="relative mx-auto max-w-7xl px-6 lg:px-8"><div className="grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28"><div><div className="mb-5 inline-flex items-center gap-2 rounded-full border border-orange-400/30 bg-orange-400/10 px-4 py-2 text-sm text-orange-100"><TrendingUp className="h-4 w-4"/>Long-term rental deal intelligence</div><h1 className="text-5xl font-black tracking-tight sm:text-6xl lg:text-7xl">Buy low. <span className="text-orange-400">Rent high.</span></h1><p className="mt-6 max-w-2xl text-lg leading-8 text-stone-300">BuyToRent AI helps rental investors find affordable markets, analyze cash flow, and spot properties with strong rent potential before they buy.</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><Button href="/analyzer">Try the deal analyzer <ArrowRight className="ml-2 h-4 w-4"/></Button><Button href="/early-access" className="border border-white/20 bg-white/5 hover:bg-white/10">Want more info? <Info className="ml-2 h-4 w-4"/></Button></div><div className="mt-8 grid gap-3 text-sm text-stone-300 sm:grid-cols-3"><div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-orange-400"/>Market ranking</div><div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-orange-400"/>Cash-flow math</div><div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-orange-400"/>Deal alerts</div></div></div><Card className="bg-white/10 p-6 backdrop-blur"><div className="mb-5 flex items-center justify-between"><div><div className="text-sm text-stone-300">Sample property score</div><div className="text-2xl font-bold text-white">Cleveland rental</div></div><ScoreBadge score={87}/></div><div className="grid gap-3 sm:grid-cols-2"><Metric label="Purchase price" value={formatCurrency(150000)}/><Metric label="Estimated rent" value={formatCurrency(1600)}/><Metric label="Gross yield" value="12.8%"/><Metric label="Monthly cash flow" value="$238" highlight/></div><div className="mt-5 rounded-3xl bg-stone-950/70 p-4"><div className="mb-3 flex items-center gap-2 text-sm font-semibold text-stone-200"><Calculator className="h-4 w-4 text-orange-400"/>What BuyToRent AI answers</div><div className="space-y-2 text-sm text-stone-300"><p>Is this property likely to cash flow?</p><p>What price should I offer to hit my target return?</p><p>Which markets have low prices and strong rents?</p></div></div></Card></div></div></section><section className="mx-auto max-w-7xl px-6 py-16 lg:px-8"><div className="mb-10 max-w-3xl"><h2 className="text-3xl font-black tracking-tight sm:text-4xl">Find markets where the numbers actually work.</h2><p className="mt-4 text-stone-300">BuyToRent AI turns scattered home prices, rent estimates, expenses, and market risk into a simple investor score.</p></div><div className="grid gap-5 md:grid-cols-3"><Card className="p-7"><Search className="mb-5 h-8 w-8 text-orange-300"/><h3 className="text-xl font-black text-white">Market Finder</h3><p className="mt-3 leading-7 text-stone-300">Rank cities and ZIP codes by affordability, rent potential, gross yield, and rental demand.</p></Card><Card className="p-7"><Calculator className="mb-5 h-8 w-8 text-orange-300"/><h3 className="text-xl font-black text-white">Deal Analyzer</h3><p className="mt-3 leading-7 text-stone-300">Estimate mortgage, taxes, insurance, vacancy, repairs, management, cash flow, cap rate, and cash-on-cash return.</p></Card><Card className="p-7"><Bell className="mb-5 h-8 w-8 text-orange-300"/><h3 className="text-xl font-black text-white">Deal Alerts</h3><p className="mt-3 leading-7 text-stone-300">Get notified when a property matches your buy box, target rent, and cash-flow requirements.</p></Card></div></section><section className="mx-auto max-w-7xl px-6 py-16 lg:px-8"><div className="grid gap-6 lg:grid-cols-2"><Card className="border-orange-400/20 bg-orange-400/10 p-8"><ShieldCheck className="mb-5 h-10 w-10 text-orange-300"/><h3 className="text-2xl font-black text-white">Built for new rental investors</h3><p className="mt-4 text-stone-300">Instead of forcing you to piece together listings, rent comps, mortgage calculators, and spreadsheets, BuyToRent AI shows whether a property is likely to cash flow in one place.</p></Card><Card className="p-8"><h3 className="text-2xl font-black text-white">Join early access</h3><p className="mt-3 text-stone-300">Get the first market reports, deal analyzer access, and launch updates.</p><div className="mt-6 flex flex-col gap-3 sm:flex-row"><input className="min-h-12 flex-1 rounded-2xl border border-white/10 bg-white px-4 text-stone-950 outline-none" placeholder="Enter your email"/><Button href="/early-access">Get early access</Button></div><p className="mt-3 text-xs text-stone-500">No spam. Just early product access and rental market insights.</p></Card></div></section><CTA/></>}
+import {
+  ArrowRight,
+  Bell,
+  Calculator,
+  CheckCircle2,
+  Info,
+  Search,
+  ShieldCheck,
+  TrendingUp,
+} from "lucide-react";
+import { Button, Card, Metric, ScoreBadge } from "@/components/ui";
+import { CTA } from "@/components/CTA";
+import { formatCurrency } from "@/lib/format";
+
+export default function HomePage() {
+  return (
+    <>
+      <section className="relative overflow-hidden bg-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(22,183,201,0.16),_transparent_36%),radial-gradient(circle_at_top_right,_rgba(6,42,85,0.08),_transparent_32%)]" />
+
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
+            <div>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#16B7C9]/30 bg-[#16B7C9]/10 px-4 py-2 text-sm font-semibold text-[#062A55]">
+                <TrendingUp className="h-4 w-4 text-[#16B7C9]" />
+                Long-term rental deal intelligence
+              </div>
+
+              <h1 className="text-5xl font-black tracking-tight text-[#062A55] sm:text-6xl lg:text-7xl">
+                Buy low. <span className="text-[#16B7C9]">Rent high.</span>
+              </h1>
+
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-700">
+                BuyToRent AI helps rental investors find affordable markets,
+                analyze cash flow, and spot properties with strong rent
+                potential before they buy.
+              </p>
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Button href="/analyzer">
+                  Try the deal analyzer <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+
+                <Button
+                  href="/early-access"
+                  className="border border-[#16B7C9]/30 bg-white text-[#062A55] hover:bg-[#16B7C9]/10"
+                >
+                  Want more info? <Info className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+
+              <div className="mt-8 grid gap-3 text-sm font-semibold text-slate-700 sm:grid-cols-3">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-[#16B7C9]" />
+                  Market ranking
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-[#16B7C9]" />
+                  Cash-flow math
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-[#16B7C9]" />
+                  Deal alerts
+                </div>
+              </div>
+            </div>
+
+            <Card className="p-6 backdrop-blur">
+              <div className="mb-5 flex items-center justify-between">
+                <div>
+                  <div className="text-sm text-slate-200">
+                    Sample property score
+                  </div>
+                  <div className="text-2xl font-bold text-white">
+                    Cleveland rental
+                  </div>
+                </div>
+
+                <ScoreBadge score={87} />
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Metric label="Purchase price" value={formatCurrency(150000)} />
+                <Metric label="Estimated rent" value={formatCurrency(1600)} />
+                <Metric label="Gross yield" value="12.8%" />
+                <Metric label="Monthly cash flow" value="$238" highlight />
+              </div>
+
+              <div className="mt-5 rounded-3xl bg-white/10 p-4">
+                <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-100">
+                  <Calculator className="h-4 w-4 text-[#16B7C9]" />
+                  What BuyToRent AI answers
+                </div>
+
+                <div className="space-y-2 text-sm text-slate-200">
+                  <p>Is this property likely to cash flow?</p>
+                  <p>What price should I offer to hit my target return?</p>
+                  <p>Which markets have low prices and strong rents?</p>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16 text-[#062A55] lg:px-8">
+        <div className="mb-10 max-w-3xl">
+          <h2 className="text-3xl font-black tracking-tight text-[#062A55] sm:text-4xl">
+            Find markets where the numbers actually work.
+          </h2>
+
+          <p className="mt-4 text-slate-700">
+            BuyToRent AI turns scattered home prices, rent estimates, expenses,
+            and market risk into a simple investor score.
+          </p>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-3">
+          <Card className="p-7">
+            <Search className="mb-5 h-8 w-8 text-[#16B7C9]" />
+            <h3 className="text-xl font-black text-white">Market Finder</h3>
+            <p className="mt-3 leading-7 text-slate-200">
+              Rank cities and ZIP codes by affordability, rent potential, gross
+              yield, and rental demand.
+            </p>
+          </Card>
+
+          <Card className="p-7">
+            <Calculator className="mb-5 h-8 w-8 text-[#16B7C9]" />
+            <h3 className="text-xl font-black text-white">Deal Analyzer</h3>
+            <p className="mt-3 leading-7 text-slate-200">
+              Estimate mortgage, taxes, insurance, vacancy, repairs,
+              management, cash flow, cap rate, and cash-on-cash return.
+            </p>
+          </Card>
+
+          <Card className="p-7">
+            <Bell className="mb-5 h-8 w-8 text-[#16B7C9]" />
+            <h3 className="text-xl font-black text-white">Deal Alerts</h3>
+            <p className="mt-3 leading-7 text-slate-200">
+              Get notified when a property matches your buy box, target rent,
+              and cash-flow requirements.
+            </p>
+          </Card>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Card className="p-8">
+            <ShieldCheck className="mb-5 h-10 w-10 text-[#16B7C9]" />
+            <h3 className="text-2xl font-black text-white">
+              Built for new rental investors
+            </h3>
+            <p className="mt-4 text-slate-200">
+              Instead of forcing you to piece together listings, rent comps,
+              mortgage calculators, and spreadsheets, BuyToRent AI shows whether
+              a property is likely to cash flow in one place.
+            </p>
+          </Card>
+
+          <Card className="p-8">
+            <h3 className="text-2xl font-black text-white">
+              Join early access
+            </h3>
+
+            <p className="mt-3 text-slate-200">
+              Get the first market reports, deal analyzer access, and launch
+              updates.
+            </p>
+
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <input
+                className="min-h-12 flex-1 rounded-2xl border border-slate-200 bg-white px-4 text-[#062A55] outline-none"
+                placeholder="Enter your email"
+              />
+
+              <Button href="/early-access">Get early access</Button>
+            </div>
+
+            <p className="mt-3 text-xs text-slate-300">
+              No spam. Just early product access and rental market insights.
+            </p>
+          </Card>
+        </div>
+      </section>
+
+      <CTA />
+    </>
+  );
+}
