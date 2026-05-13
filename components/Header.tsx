@@ -7,7 +7,7 @@ import { useState } from "react";
 const nav = [
   { href: "/", label: "Home" },
   { href: "/analyzer", label: "Deal Analyzer" },
-  { href: "/mortgage-estimator", label: "Mortgage Estimator" },
+ { href: "/mortgage-estimator", label: "Calculators" },
   { href: "/markets", label: "Market Finder" },
   { href: "/alerts", label: "Deal Alerts" },
 ];
