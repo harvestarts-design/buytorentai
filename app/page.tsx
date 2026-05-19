@@ -41,12 +41,12 @@ export default function HomePage() {
                   Try the deal analyzer <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
 
-                <Button
-                  href="/early-access"
-                  className="border border-[#16B7C9]/30 bg-white text-[#062A55] hover:bg-[#16B7C9]/10"
-                >
-                  Want more info? <Info className="ml-2 h-4 w-4" />
-                </Button>
+              <Button
+  href="/early-access"
+  className="bg-[#16B7C9] text-white hover:bg-[#119AA9]"
+>
+  Want more info? <Info className="ml-2 h-4 w-4" />
+</Button>
               </div>
 
               <div className="mt-8 grid gap-3 text-sm font-semibold text-slate-700 sm:grid-cols-3">
