@@ -12,6 +12,8 @@ import { Button, Card, Metric, ScoreBadge } from "@/components/ui";
 import { CTA } from "@/components/CTA";
 import { formatCurrency } from "@/lib/format";
 
+const earlyAccessFormUrl = "PASTE_YOUR_TALLY_FORM_LINK_HERE";
+
 export default function HomePage() {
   return (
     <>
@@ -19,7 +21,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(22,183,201,0.16),_transparent_36%),radial-gradient(circle_at_top_right,_rgba(6,42,85,0.08),_transparent_32%)]" />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
+          <div className="grid items-center gap-12 py-14 lg:grid-cols-2 lg:py-20">
             <div>
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#16B7C9]/30 bg-[#16B7C9]/10 px-4 py-2 text-sm font-semibold text-[#062A55]">
                 <TrendingUp className="h-4 w-4 text-[#16B7C9]" />
@@ -37,16 +39,13 @@ export default function HomePage() {
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button href="/analyzer">
-                  Try the deal analyzer <ArrowRight className="ml-2 h-4 w-4" />
+                <Button href="/calculators">
+                  Use calculators <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
 
-              <Button
-  href="/early-access"
-  className="bg-[#16B7C9] text-white hover:bg-[#119AA9]"
->
-  Want more info? <Info className="ml-2 h-4 w-4" />
-</Button>
+                <Button href="/early-access">
+                  Want more info? <Info className="ml-2 h-4 w-4" />
+                </Button>
               </div>
 
               <div className="mt-8 grid gap-3 text-sm font-semibold text-slate-700 sm:grid-cols-3">
@@ -83,12 +82,15 @@ export default function HomePage() {
 
               <div className="grid gap-3 sm:grid-cols-2">
                 <Metric label="Purchase price" value={formatCurrency(90000)} />
+
                 <Metric
                   label="Gross monthly rent"
                   value={formatCurrency(1500)}
                   highlight
                 />
+
                 <Metric label="Gross yield" value="20.0%" highlight />
+
                 <Metric label="Avg. tax rate" value="1.9%" />
               </div>
 
@@ -109,7 +111,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16 text-[#062A55] lg:px-8">
+      <section className="mx-auto max-w-7xl px-6 py-8 text-[#062A55] lg:px-8">
         <div className="mb-10 max-w-3xl">
           <h2 className="text-3xl font-black tracking-tight text-[#062A55] sm:text-4xl">
             Find markets where the numbers actually work.
@@ -122,50 +124,71 @@ export default function HomePage() {
         </div>
 
         <div className="grid gap-5 md:grid-cols-3">
-          <Card className="p-7">
-            <Search className="mb-5 h-8 w-8 text-[#16B7C9]" />
-            <h3 className="text-xl font-black text-white">Market Finder</h3>
-            <p className="mt-3 leading-7 text-slate-200">
-              Rank cities and ZIP codes by affordability, rent potential, gross
-              yield, and rental demand.
-            </p>
-          </Card>
+          <a href="/markets" className="block transition hover:-translate-y-1">
+            <Card className="h-full p-7">
+              <Search className="mb-5 h-8 w-8 text-[#16B7C9]" />
 
-          <Card className="p-7">
-            <Calculator className="mb-5 h-8 w-8 text-[#16B7C9]" />
-            <h3 className="text-xl font-black text-white">Deal Analyzer</h3>
-            <p className="mt-3 leading-7 text-slate-200">
-              Estimate mortgage, taxes, insurance, vacancy, repairs,
-              management, gross yield, cap rate, and estimated cash-on-cash
-              return.
-            </p>
-          </Card>
+              <h3 className="text-xl font-black text-white">Market Finder</h3>
 
-          <Card className="p-7">
-            <Bell className="mb-5 h-8 w-8 text-[#16B7C9]" />
-            <h3 className="text-xl font-black text-white">Deal Alerts</h3>
-            <p className="mt-3 leading-7 text-slate-200">
-              Get notified when a property matches your buy box, target rent,
-              and rent-to-price criteria.
-            </p>
-          </Card>
+              <p className="mt-3 leading-7 text-slate-200">
+                Rank cities and ZIP codes by affordability, rent potential,
+                gross yield, and rental demand.
+              </p>
+            </Card>
+          </a>
+
+          <a
+            href="/calculators"
+            className="block transition hover:-translate-y-1"
+          >
+            <Card className="h-full p-7">
+              <Calculator className="mb-5 h-8 w-8 text-[#16B7C9]" />
+
+              <h3 className="text-xl font-black text-white">Calculators</h3>
+
+              <p className="mt-3 leading-7 text-slate-200">
+                Estimate mortgage costs, gross yield, rent-to-price potential,
+                and property assumptions.
+              </p>
+            </Card>
+          </a>
+
+          <a href="/alerts" className="block transition hover:-translate-y-1">
+            <Card className="h-full p-7">
+              <Bell className="mb-5 h-8 w-8 text-[#16B7C9]" />
+
+              <h3 className="text-xl font-black text-white">Deal Alerts</h3>
+
+              <p className="mt-3 leading-7 text-slate-200">
+                Get notified when a property matches your buy box, target rent,
+                and rent-to-price criteria.
+              </p>
+            </Card>
+          </a>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+      <section className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-2">
-          <Card className="p-8">
-            <ShieldCheck className="mb-5 h-10 w-10 text-[#16B7C9]" />
-            <h3 className="text-2xl font-black text-white">
-              Built for new rental investors
-            </h3>
-            <p className="mt-4 text-slate-200">
-              Instead of forcing you to piece together listings, rent comps,
-              mortgage calculators, and spreadsheets, BuyToRent AI helps you
-              compare price, rent potential, yield, and market risk in one
-              place.
-            </p>
-          </Card>
+          <a
+            href="/calculators"
+            className="block transition hover:-translate-y-1"
+          >
+            <Card className="h-full p-8">
+              <ShieldCheck className="mb-5 h-10 w-10 text-[#16B7C9]" />
+
+              <h3 className="text-2xl font-black text-white">
+                Built for new rental investors
+              </h3>
+
+              <p className="mt-4 text-slate-200">
+                Instead of forcing you to piece together listings, rent comps,
+                mortgage calculators, and spreadsheets, BuyToRent AI helps you
+                compare price, rent potential, yield, and market risk in one
+                place.
+              </p>
+            </Card>
+          </a>
 
           <Card className="p-8">
             <h3 className="text-2xl font-black text-white">
@@ -173,17 +196,19 @@ export default function HomePage() {
             </h3>
 
             <p className="mt-3 text-slate-200">
-              Get the first market reports, deal analyzer access, and launch
+              Get the first market reports, calculator access, and launch
               updates.
             </p>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <input
-                className="min-h-12 flex-1 rounded-2xl border border-slate-200 bg-white px-4 text-[#062A55] outline-none"
-                placeholder="Enter your email"
-              />
-
-              <Button href="/early-access">Get early access</Button>
+            <div className="mt-6">
+              <a
+                href={earlyAccessFormUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-[#16B7C9] px-6 font-bold text-white transition hover:bg-[#119AA9]"
+              >
+                Get early access
+              </a>
             </div>
 
             <p className="mt-3 text-xs text-slate-300">
