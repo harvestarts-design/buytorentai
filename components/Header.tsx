@@ -7,7 +7,6 @@ import { useState } from "react";
 
 const nav = [
   { href: "/", label: "Home" },
-  { href: "/analyzer", label: "Deal Analyzer" },
   { href: "/mortgage-estimator", label: "Calculators" },
   { href: "/markets", label: "Market Finder" },
   { href: "/alerts", label: "Deal Alerts" },
@@ -26,12 +25,12 @@ export function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
         <Link href="/" className="flex items-center">
           <Image
-            src="/buytorent-logo.png"
+            src="/public/buytorent-logo.png"
             alt="BuyToRent AI"
-            width={170}
-            height={80}
+            width={220}
+            height={110}
             priority
-            className="h-12 w-auto object-contain"
+            className="h-16 w-auto object-contain"
           />
         </Link>
 
