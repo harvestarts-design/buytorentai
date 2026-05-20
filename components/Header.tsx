@@ -1,13 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { Home, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 const nav = [
   { href: "/", label: "Home" },
   { href: "/analyzer", label: "Deal Analyzer" },
- { href: "/mortgage-estimator", label: "Calculators" },
+  { href: "/mortgage-estimator", label: "Calculators" },
   { href: "/markets", label: "Market Finder" },
   { href: "/alerts", label: "Deal Alerts" },
 ];
@@ -23,17 +24,15 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
-        <Link href="/" className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#16B7C9] shadow-lg shadow-[#16B7C9]/20">
-            <Home className="h-5 w-5 text-white" />
-          </div>
-
-          <div>
-            <div className="text-xl font-bold tracking-tight text-[#062A55]">
-              BuyToRent AI
-            </div>
-            <div className="text-xs text-slate-500">Buy low. Rent high.</div>
-          </div>
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/buytorent-logo.png"
+            alt="BuyToRent AI"
+            width={170}
+            height={80}
+            priority
+            className="h-12 w-auto object-contain"
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 rounded-2xl border border-slate-200 bg-slate-100 p-1 lg:flex">
