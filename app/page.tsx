@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   ArrowRight,
   Bell,
@@ -18,10 +19,20 @@ export default function HomePage() {
   return (
     <>
       <section className="relative overflow-hidden bg-white">
+        <div className="mx-auto max-w-7xl px-6 pt-6 lg:px-8">
+  <Image
+    src="/public/buytorent-banner.png"
+    alt="BuyToRent AI banner"
+    width={2048}
+    height={700}
+    priority
+    className="max-h-[300px] w-full rounded-[2rem] border border-slate-200 object-cover object-center shadow-xl"
+  />
+</div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(22,183,201,0.16),_transparent_36%),radial-gradient(circle_at_top_right,_rgba(6,42,85,0.08),_transparent_32%)]" />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid items-center gap-12 py-14 lg:grid-cols-2 lg:py-20">
+         <div className="grid items-center gap-12 py-10 lg:grid-cols-2 lg:py-14">
             <div>
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#16B7C9]/30 bg-[#16B7C9]/10 px-4 py-2 text-sm font-semibold text-[#062A55]">
                 <TrendingUp className="h-4 w-4 text-[#16B7C9]" />
