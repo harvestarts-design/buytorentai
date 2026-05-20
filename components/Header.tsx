@@ -22,15 +22,15 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3 lg:px-8">
         <Link href="/" className="flex items-center">
           <Image
             src="/public/buytorent-logo.png"
             alt="BuyToRent AI"
-            width={220}
-            height={110}
+            width={380}
+            height={190}
             priority
-            className="h-16 w-auto object-contain"
+            className="h-28 w-auto object-contain"
           />
         </Link>
 
