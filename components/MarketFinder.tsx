@@ -15,6 +15,8 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { sampleMarkets } from "@/lib/sampleData";
+import { sampleSubmarkets } from "@/lib/sampleSubmarkets";
+import { sampleListings } from "@/lib/sampleListings";
 import { formatCurrency } from "@/lib/format";
 import { Button, Card, Metric, ScoreBadge } from "@/components/ui";
 
@@ -41,6 +43,64 @@ function toNumber(value: string) {
   if (value === "" || value === null || value === undefined) return null;
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : null;
+}
+
+function matchesPriceBucket(price: number, bucket: string) {
+  if (bucket === "Any") return true;
+  if (bucket === "<$100K") return price < 100000;
+  if (bucket === "$101K–$200K") return price >= 101000 && price <= 200000;
+  if (bucket === "$201K–$300K") return price >= 201000 && price <= 300000;
+  if (bucket === "$301K–$500K") return price >= 301000 && price <= 500000;
+  if (bucket === ">$501K") return price >= 501000;
+  return true;
+}
+
+function normalizePropertyType(type: string) {
+  if (type === "Condo") return "Apartment/Condo";
+  if (type === "Duplex") return "Multi unit";
+  return type;
+}
+
+function propertyTypeMatches(types: string[], selectedType: string) {
+  if (selectedType === "Any") return true;
+
+  return types.some((type) => normalizePropertyType(type) === selectedType);
+}
+
+function getLayerValue(item: any, layer: string) {
+  if (layer === "buyToRentScore") return item.buyToRentScore ?? item.score ?? 0;
+  if (layer === "homePrice") return item.medianHomePrice ?? item.price ?? 0;
+  if (layer === "locationScore") return item.locationScore ?? 0;
+  if (layer === "propertyRatingScore") return item.propertyRatingScore ?? 0;
+  if (layer === "listingCount")
+    return item.listingCount ?? item.listingCountLtm ?? 0;
+  if (layer === "grossMonthlyRent") return item.grossMonthlyRent ?? item.rent ?? 0;
+  if (layer === "grossYield") return item.grossYield ?? item.yield ?? 0;
+  if (layer === "rentalRevenuePotential")
+    return item.rentalRevenuePotential ?? 0;
+
+  return item.buyToRentScore ?? item.score ?? 0;
+}
+
+function getLayerLabel(layer: string) {
+  if (layer === "buyToRentScore") return "BuyToRent Score";
+  if (layer === "homePrice") return "Home Price";
+  if (layer === "locationScore") return "Location Score";
+  if (layer === "propertyRatingScore") return "Property Rating Score";
+  if (layer === "listingCount") return "Listing Count";
+  if (layer === "grossMonthlyRent") return "Gross Monthly Rent";
+  if (layer === "grossYield") return "Gross Yield";
+  if (layer === "rentalRevenuePotential") return "Rental Revenue Potential";
+
+  return "BuyToRent Score";
+}
+
+function formatLayerValue(value: number, layer: string) {
+  if (layer === "homePrice") return formatCurrency(value);
+  if (layer === "grossMonthlyRent") return formatCurrency(value);
+  if (layer === "grossYield") return `${value.toFixed(1)}%`;
+  if (layer === "listingCount") return `${value}`;
+  return `${value}`;
 }
 
 function Input({
@@ -155,6 +215,15 @@ export function MarketFinder() {
   const [rentInput, setRentInput] = useState("");
   const [minimumYieldInput, setMinimumYieldInput] = useState("");
 
+  const [selectedPropertyType, setSelectedPropertyType] = useState("Any");
+  const [bedrooms, setBedrooms] = useState<number | null>(null);
+  const [bathrooms, setBathrooms] = useState<number | null>(null);
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [priceSlider, setPriceSlider] = useState(1000000);
+  const [selectedPriceBucket, setSelectedPriceBucket] = useState("Any");
+  const [heatMapLayer, setHeatMapLayer] = useState("buyToRentScore");
+
   const [activeSearchType, setActiveSearchType] = useState<
     "default" | "purchase" | "rent"
   >("default");
@@ -212,6 +281,15 @@ export function MarketFinder() {
     setInterestRateInput("");
     setRentInput("");
     setMinimumYieldInput("");
+
+    setSelectedPropertyType("Any");
+    setBedrooms(null);
+    setBathrooms(null);
+    setMinPrice("");
+    setMaxPrice("");
+    setPriceSlider(1000000);
+    setSelectedPriceBucket("Any");
+    setHeatMapLayer("buyToRentScore");
 
     setActiveSearchType("default");
     setActivePurchasePrice(null);
@@ -292,22 +370,157 @@ export function MarketFinder() {
     activeMinimumYield,
   ]);
 
+  const filteredSubmarkets = useMemo(() => {
+    const min = toNumber(minPrice);
+    const max = toNumber(maxPrice);
+
+    return sampleSubmarkets
+      .filter((submarket) => {
+        const matchesPropertyType = propertyTypeMatches(
+          submarket.propertyTypes,
+          selectedPropertyType
+        );
+
+        const matchesBedrooms =
+          bedrooms === null ||
+          submarket.bedrooms.some((bedroom) => bedroom >= bedrooms);
+
+        const matchesBathrooms =
+          bathrooms === null ||
+          submarket.bathrooms.some((bathroom) => bathroom >= bathrooms);
+
+        const matchesMinPrice = min === null || submarket.medianHomePrice >= min;
+        const matchesMaxPrice = max === null || submarket.medianHomePrice <= max;
+        const matchesSlider = submarket.medianHomePrice <= priceSlider;
+        const matchesBucket = matchesPriceBucket(
+          submarket.medianHomePrice,
+          selectedPriceBucket
+        );
+
+        const matchesPurchaseSearch =
+          activePurchasePrice === null ||
+          submarket.medianHomePrice <= activePurchasePrice;
+
+        const matchesRentSearch =
+          activeDesiredRent === null ||
+          submarket.grossMonthlyRent >= activeDesiredRent;
+
+        const matchesYieldSearch =
+          activeMinimumYield === null ||
+          submarket.grossYield >= activeMinimumYield;
+
+        return (
+          matchesPropertyType &&
+          matchesBedrooms &&
+          matchesBathrooms &&
+          matchesMinPrice &&
+          matchesMaxPrice &&
+          matchesSlider &&
+          matchesBucket &&
+          matchesPurchaseSearch &&
+          matchesRentSearch &&
+          matchesYieldSearch
+        );
+      })
+      .sort((a, b) => b.buyToRentScore - a.buyToRentScore);
+  }, [
+    selectedPropertyType,
+    bedrooms,
+    bathrooms,
+    minPrice,
+    maxPrice,
+    priceSlider,
+    selectedPriceBucket,
+    activePurchasePrice,
+    activeDesiredRent,
+    activeMinimumYield,
+  ]);
+
+  const filteredListings = useMemo(() => {
+    const min = toNumber(minPrice);
+    const max = toNumber(maxPrice);
+    const matchingSubmarketNames = filteredSubmarkets.map(
+      (item) => item.submarket
+    );
+
+    return sampleListings
+      .filter((listing) => {
+        const matchesSubmarket =
+          matchingSubmarketNames.length === 0 ||
+          matchingSubmarketNames.includes(listing.submarket);
+
+        const matchesPropertyType =
+          selectedPropertyType === "Any" ||
+          normalizePropertyType(listing.propertyType) === selectedPropertyType;
+
+        const matchesBedrooms = bedrooms === null || listing.beds >= bedrooms;
+        const matchesBathrooms = bathrooms === null || listing.baths >= bathrooms;
+
+        const matchesMinPrice = min === null || listing.price >= min;
+        const matchesMaxPrice = max === null || listing.price <= max;
+        const matchesSlider = listing.price <= priceSlider;
+        const matchesBucket = matchesPriceBucket(
+          listing.price,
+          selectedPriceBucket
+        );
+
+        const matchesPurchaseSearch =
+          activePurchasePrice === null || listing.price <= activePurchasePrice;
+
+        const matchesRentSearch =
+          activeDesiredRent === null ||
+          listing.estimatedGrossMonthlyRent >= activeDesiredRent;
+
+        const matchesYieldSearch =
+          activeMinimumYield === null ||
+          listing.grossYield >= activeMinimumYield;
+
+        return (
+          matchesSubmarket &&
+          matchesPropertyType &&
+          matchesBedrooms &&
+          matchesBathrooms &&
+          matchesMinPrice &&
+          matchesMaxPrice &&
+          matchesSlider &&
+          matchesBucket &&
+          matchesPurchaseSearch &&
+          matchesRentSearch &&
+          matchesYieldSearch
+        );
+      })
+      .sort((a, b) => b.buyToRentScore - a.buyToRentScore);
+  }, [
+    filteredSubmarkets,
+    selectedPropertyType,
+    bedrooms,
+    bathrooms,
+    minPrice,
+    maxPrice,
+    priceSlider,
+    selectedPriceBucket,
+    activePurchasePrice,
+    activeDesiredRent,
+    activeMinimumYield,
+  ]);
+
   const topMarket = filteredAndRankedMarkets[0];
+  const topSubmarket = filteredSubmarkets[0];
 
   const searchDescription =
     activeSearchType === "purchase" && activePurchasePrice
-      ? `Showing markets with median purchase prices at or below ${formatCurrency(
+      ? `Showing markets and submarkets with prices at or below ${formatCurrency(
           activePurchasePrice
         )}. Down payment and interest rate are used only to estimate mortgage impact.`
       : activeSearchType === "rent" && activeDesiredRent
-      ? `Showing markets with estimated gross monthly rent at or above ${formatCurrency(
+      ? `Showing markets and submarkets with estimated gross monthly rent at or above ${formatCurrency(
           activeDesiredRent
         )}${
           activeMinimumYield
             ? ` and gross yield at or above ${activeMinimumYield.toFixed(1)}%`
             : ""
         }.`
-      : "Showing all sample markets. Use either purchase assumptions or rental income target to personalize the results.";
+      : "Showing all sample markets. Use filters, purchase assumptions, or rental income targets to personalize the results.";
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-10 text-[#062A55] lg:px-8 lg:py-14">
@@ -323,18 +536,220 @@ export function MarketFinder() {
           </h1>
 
           <p className="mt-3 max-w-3xl text-slate-700">
-            Compare rental markets by purchase price, gross monthly rent, gross
-            yield, vacancy risk, renter demand, and BuyToRent Score.
+            Compare rental markets, submarkets, and sample for-sale properties
+            by purchase price, gross monthly rent, gross yield, renter demand,
+            supply, market risk, and BuyToRent Score.
           </p>
         </div>
 
-        <Button href="/analyzer">
-          Analyze a property <ArrowRight className="ml-2 h-4 w-4" />
+        <Button href="/mortgage-estimator">
+          Use calculators <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
+      </div>
+
+      <div className="mb-6 grid gap-4 lg:grid-cols-5">
+        <Card className="p-5">
+          <div className="text-sm text-slate-200">Submarkets</div>
+          <div className="mt-1 text-3xl font-black text-white">
+            {filteredSubmarkets.length}
+          </div>
+        </Card>
+
+        <Card className="p-5">
+          <div className="text-sm text-slate-200">For-sale matches</div>
+          <div className="mt-1 text-3xl font-black text-white">
+            {filteredListings.length}
+          </div>
+        </Card>
+
+        <Card className="p-5">
+          <div className="text-sm text-slate-200">Top submarket</div>
+          <div className="mt-1 text-xl font-black text-white">
+            {topSubmarket ? topSubmarket.submarket : "No match"}
+          </div>
+        </Card>
+
+        <Card className="p-5">
+          <div className="text-sm text-slate-200">Top gross yield</div>
+          <div className="mt-1 text-3xl font-black text-[#16B7C9]">
+            {topSubmarket ? `${topSubmarket.grossYield.toFixed(1)}%` : "-"}
+          </div>
+        </Card>
+
+        <Card className="p-5">
+          <div className="text-sm text-slate-200">Top score</div>
+          <div className="mt-1 text-3xl font-black text-[#16B7C9]">
+            {topSubmarket ? topSubmarket.buyToRentScore : "-"}
+          </div>
+        </Card>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
         <div className="space-y-6">
+          <Card className="p-6 lg:p-8">
+            <div className="mb-5 flex items-center gap-3">
+              <Search className="h-6 w-6 text-[#16B7C9]" />
+              <h2 className="text-2xl font-black text-white">
+                Market filters
+              </h2>
+            </div>
+
+            <p className="mb-5 text-sm leading-6 text-slate-200">
+              Refine markets, submarkets, and matching properties by type, beds,
+              baths, price range, and heat map layer.
+            </p>
+
+            <div className="grid gap-4">
+              <label className="block">
+                <span className="mb-1 block text-xs text-slate-200">
+                  Property type
+                </span>
+                <select
+                  value={selectedPropertyType}
+                  onChange={(e) => setSelectedPropertyType(e.target.value)}
+                  className="min-h-11 w-full rounded-2xl bg-white px-4 text-[#062A55] outline-none"
+                >
+                  <option>Any</option>
+                  <option>Apartment/Condo</option>
+                  <option>Townhome</option>
+                  <option>House</option>
+                  <option>Multi unit</option>
+                  <option>Apartment building</option>
+                  <option>Commercial</option>
+                </select>
+              </label>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="block">
+                  <span className="mb-1 block text-xs text-slate-200">
+                    Bedrooms
+                  </span>
+                  <select
+                    value={bedrooms ?? ""}
+                    onChange={(e) =>
+                      setBedrooms(e.target.value ? Number(e.target.value) : null)
+                    }
+                    className="min-h-11 w-full rounded-2xl bg-white px-4 text-[#062A55] outline-none"
+                  >
+                    <option value="">Any</option>
+                    <option value="1">1+</option>
+                    <option value="2">2+</option>
+                    <option value="3">3+</option>
+                    <option value="4">4+</option>
+                    <option value="5">5+</option>
+                  </select>
+                </label>
+
+                <label className="block">
+                  <span className="mb-1 block text-xs text-slate-200">
+                    Bathrooms
+                  </span>
+                  <select
+                    value={bathrooms ?? ""}
+                    onChange={(e) =>
+                      setBathrooms(
+                        e.target.value ? Number(e.target.value) : null
+                      )
+                    }
+                    className="min-h-11 w-full rounded-2xl bg-white px-4 text-[#062A55] outline-none"
+                  >
+                    <option value="">Any</option>
+                    <option value="1">1+</option>
+                    <option value="2">2+</option>
+                    <option value="3">3+</option>
+                    <option value="4">4+</option>
+                    <option value="5">5+</option>
+                  </select>
+                </label>
+              </div>
+
+              <label className="block">
+                <span className="mb-1 block text-xs text-slate-200">
+                  Price bucket
+                </span>
+                <select
+                  value={selectedPriceBucket}
+                  onChange={(e) => setSelectedPriceBucket(e.target.value)}
+                  className="min-h-11 w-full rounded-2xl bg-white px-4 text-[#062A55] outline-none"
+                >
+                  <option>Any</option>
+                  <option>{"<$100K"}</option>
+                  <option>$101K–$200K</option>
+                  <option>$201K–$300K</option>
+                  <option>$301K–$500K</option>
+                  <option>{">$501K"}</option>
+                </select>
+              </label>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="block">
+                  <span className="mb-1 block text-xs text-slate-200">
+                    Min price
+                  </span>
+                  <input
+                    type="number"
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value)}
+                    placeholder="0"
+                    className="min-h-11 w-full rounded-2xl bg-white px-4 text-[#062A55] outline-none"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="mb-1 block text-xs text-slate-200">
+                    Max price
+                  </span>
+                  <input
+                    type="number"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value)}
+                    placeholder="1000000"
+                    className="min-h-11 w-full rounded-2xl bg-white px-4 text-[#062A55] outline-none"
+                  />
+                </label>
+              </div>
+
+              <label className="block">
+                <span className="mb-1 block text-xs text-slate-200">
+                  Price slider: {formatCurrency(priceSlider)}
+                </span>
+                <input
+                  type="range"
+                  min="0"
+                  max="1000000"
+                  step="25000"
+                  value={priceSlider}
+                  onChange={(e) => setPriceSlider(Number(e.target.value))}
+                  className="w-full accent-[#16B7C9]"
+                />
+              </label>
+
+              <label className="block">
+                <span className="mb-1 block text-xs text-slate-200">
+                  Heat map layer
+                </span>
+                <select
+                  value={heatMapLayer}
+                  onChange={(e) => setHeatMapLayer(e.target.value)}
+                  className="min-h-11 w-full rounded-2xl bg-white px-4 text-[#062A55] outline-none"
+                >
+                  <option value="buyToRentScore">BuyToRent Score</option>
+                  <option value="homePrice">Home Price</option>
+                  <option value="locationScore">Location Score</option>
+                  <option value="propertyRatingScore">
+                    Property Rating Score
+                  </option>
+                  <option value="listingCount">Listing Count</option>
+                  <option value="grossMonthlyRent">Gross Monthly Rent</option>
+                  <option value="grossYield">Gross Yield</option>
+                  <option value="rentalRevenuePotential">
+                    Rental Revenue Potential
+                  </option>
+                </select>
+              </label>
+            </div>
+          </Card>
+
           <Card className="p-6 lg:p-8">
             <div className="mb-5 flex items-center gap-3">
               <Home className="h-6 w-6 text-[#16B7C9]" />
@@ -411,9 +826,7 @@ export function MarketFinder() {
                 <Metric
                   label="Est. mortgage"
                   value={
-                    monthlyPayment !== null
-                      ? formatCurrency(monthlyPayment)
-                      : "-"
+                    monthlyPayment !== null ? formatCurrency(monthlyPayment) : "-"
                   }
                 />
               </div>
@@ -519,59 +932,291 @@ export function MarketFinder() {
         </div>
 
         <div className="space-y-6">
-          {topMarket ? (
+          {topSubmarket ? (
             <Card className="p-6 lg:p-8">
               <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-start">
                 <div>
                   <div className="mb-2 text-sm font-semibold text-[#16B7C9]">
-                    Top personalized match
+                    Top submarket match
                   </div>
 
                   <h2 className="text-3xl font-black text-white">
-                    {topMarket.market}
+                    {topSubmarket.submarket}
                   </h2>
 
+                  <p className="mt-1 text-sm text-slate-300">
+                    {topSubmarket.parentMarket}
+                  </p>
+
                   <p className="mt-3 max-w-2xl leading-7 text-slate-200">
-                    {topMarket.note}
+                    {topSubmarket.note}
                   </p>
                 </div>
 
-                <ScoreBadge score={topMarket.personalizedScore} />
+                <ScoreBadge score={topSubmarket.buyToRentScore} />
               </div>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-4">
                 <Metric
                   label="Median price"
-                  value={formatCurrency(topMarket.price)}
+                  value={formatCurrency(topSubmarket.medianHomePrice)}
                 />
 
                 <Metric
                   label="Gross monthly rent"
-                  value={formatCurrency(topMarket.rent)}
+                  value={formatCurrency(topSubmarket.grossMonthlyRent)}
                   highlight
                 />
 
                 <Metric
                   label="Gross yield"
-                  value={`${topMarket.yield.toFixed(1)}%`}
+                  value={`${topSubmarket.grossYield.toFixed(1)}%`}
                   highlight
                 />
 
-                <Metric label="Demand" value={topMarket.renterDemand} />
+                <Metric label="Listings" value={`${topSubmarket.listingCount}`} />
               </div>
             </Card>
           ) : (
             <Card className="border-red-400/20 bg-red-400/10 p-6 lg:p-8">
               <h2 className="text-2xl font-black text-white">
-                No markets match yet
+                No submarkets match yet
               </h2>
 
               <p className="mt-3 text-slate-200">
-                Try increasing your purchase price, lowering your desired rent,
-                or removing your minimum gross yield.
+                Try increasing your price range, lowering your desired rent, or
+                removing a property-type filter.
               </p>
             </Card>
           )}
+
+          <Card className="p-6 lg:p-8">
+            <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
+              <div>
+                <h2 className="text-2xl font-black text-white">
+                  BuyToRent Market Heat Map
+                </h2>
+                <p className="mt-2 text-sm text-slate-200">
+                  Sample heat map preview by {getLayerLabel(heatMapLayer)}.
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-white px-4 py-3 text-sm font-bold text-[#062A55]">
+                {getLayerLabel(heatMapLayer)}
+              </div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {filteredSubmarkets.slice(0, 9).map((submarket) => {
+                const layerValue = getLayerValue(submarket, heatMapLayer);
+
+                return (
+                  <div
+                    key={submarket.id}
+                    className="rounded-3xl border border-white/10 bg-white/10 p-4"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <div className="font-black text-white">
+                          {submarket.submarket}
+                        </div>
+                        <div className="mt-1 text-xs text-slate-300">
+                          {submarket.parentMarket}
+                        </div>
+                      </div>
+
+                      <div className="rounded-full bg-[#16B7C9]/20 px-3 py-1 text-sm font-black text-[#16B7C9]">
+                        {submarket.buyToRentScore}
+                      </div>
+                    </div>
+
+                    <div className="mt-4 h-3 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full rounded-full bg-[#16B7C9]"
+                        style={{
+                          width: `${Math.max(
+                            12,
+                            Math.min(100, submarket.buyToRentScore)
+                          )}%`,
+                        }}
+                      />
+                    </div>
+
+                    <div className="mt-4 grid grid-cols-2 gap-2 text-xs text-slate-200">
+                      <div>Price: {formatCurrency(submarket.medianHomePrice)}</div>
+                      <div>Rent: {formatCurrency(submarket.grossMonthlyRent)}</div>
+                      <div>Yield: {submarket.grossYield.toFixed(1)}%</div>
+                      <div>
+                        Layer: {formatLayerValue(layerValue, heatMapLayer)}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+
+              {filteredSubmarkets.length === 0 && (
+                <div className="rounded-3xl border border-white/10 bg-white/10 p-6 text-center text-slate-200 sm:col-span-2 lg:col-span-3">
+                  No submarkets match your current filters.
+                </div>
+              )}
+            </div>
+          </Card>
+
+          <Card className="p-6 lg:p-8">
+            <div className="mb-6 flex items-center gap-3">
+              <Building2 className="h-6 w-6 text-[#16B7C9]" />
+              <h2 className="text-2xl font-black text-white">
+                Submarket rankings
+              </h2>
+            </div>
+
+            <div className="overflow-hidden rounded-3xl border border-white/10">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-white/10 text-slate-200">
+                  <tr>
+                    <th className="px-4 py-3">Submarket</th>
+                    <th className="px-4 py-3">Price</th>
+                    <th className="px-4 py-3">Gross Rent</th>
+                    <th className="px-4 py-3">Yield</th>
+                    <th className="px-4 py-3">Listings</th>
+                    <th className="px-4 py-3">Score</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {filteredSubmarkets.map((row) => (
+                    <tr
+                      key={row.id}
+                      className="border-t border-white/10 text-slate-100"
+                    >
+                      <td className="px-4 py-4 font-semibold">
+                        <span className="flex items-center gap-2">
+                          <MapPin className="h-4 w-4 text-[#16B7C9]" />
+                          {row.submarket}
+                        </span>
+                        <div className="mt-1 text-xs text-slate-400">
+                          {row.parentMarket}
+                        </div>
+                      </td>
+
+                      <td className="px-4 py-4">
+                        {formatCurrency(row.medianHomePrice)}
+                      </td>
+                      <td className="px-4 py-4">
+                        {formatCurrency(row.grossMonthlyRent)}
+                      </td>
+                      <td className="px-4 py-4">
+                        {row.grossYield.toFixed(1)}%
+                      </td>
+                      <td className="px-4 py-4">{row.listingCount}</td>
+                      <td className="px-4 py-4">
+                        <span className="rounded-full bg-[#16B7C9]/20 px-3 py-1 font-bold text-[#16B7C9]">
+                          {row.buyToRentScore}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+
+                  {filteredSubmarkets.length === 0 && (
+                    <tr>
+                      <td
+                        colSpan={6}
+                        className="px-4 py-8 text-center text-slate-300"
+                      >
+                        No submarkets match your current filters.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+
+          <Card className="p-6 lg:p-8">
+            <div className="mb-6 flex items-center justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-black text-white">
+                  Matching properties for sale
+                </h2>
+                <p className="mt-2 text-sm text-slate-200">
+                  Sample for-sale properties that match your selected criteria.
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-white/10 px-4 py-3 text-xl font-black text-white">
+                {filteredListings.length}
+              </div>
+            </div>
+
+            <div className="grid gap-4">
+              {filteredListings.map((listing) => (
+                <div
+                  key={listing.id}
+                  className="rounded-3xl border border-white/10 bg-white/10 p-5"
+                >
+                  <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
+                    <div>
+                      <div className="mb-2 inline-flex rounded-full bg-[#16B7C9]/20 px-3 py-1 text-xs font-bold text-[#16B7C9]">
+                        {listing.status}
+                      </div>
+
+                      <h3 className="text-xl font-black text-white">
+                        {listing.address}
+                      </h3>
+
+                      <p className="mt-1 text-sm text-slate-300">
+                        {listing.submarket} · {listing.propertyType} ·{" "}
+                        {listing.beds} bd / {listing.baths} ba
+                      </p>
+                    </div>
+
+                    <div className="rounded-2xl bg-white px-4 py-3 text-center">
+                      <div className="text-xs font-bold text-[#062A55]">
+                        BuyToRent Score
+                      </div>
+                      <div className="text-3xl font-black text-[#16B7C9]">
+                        {listing.buyToRentScore}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 grid gap-3 sm:grid-cols-4">
+                    <Metric label="Price" value={formatCurrency(listing.price)} />
+
+                    <Metric
+                      label="Gross monthly rent"
+                      value={formatCurrency(listing.estimatedGrossMonthlyRent)}
+                      highlight
+                    />
+
+                    <Metric
+                      label="Gross yield"
+                      value={`${listing.grossYield.toFixed(1)}%`}
+                      highlight
+                    />
+
+                    <Metric
+                      label="Avg. tax rate"
+                      value={`${listing.avgTaxRate}%`}
+                    />
+                  </div>
+
+                  <a
+                    href={listing.listingUrl}
+                    className="mt-5 inline-flex min-h-11 items-center justify-center rounded-2xl bg-[#16B7C9] px-5 text-sm font-bold text-white transition hover:bg-[#119AA9]"
+                  >
+                    View listing
+                  </a>
+                </div>
+              ))}
+
+              {filteredListings.length === 0 && (
+                <div className="rounded-3xl border border-white/10 bg-white/10 p-6 text-center text-slate-200">
+                  No sample listings match your current filters.
+                </div>
+              )}
+            </div>
+          </Card>
 
           <Card className="p-6 lg:p-8">
             <div className="mb-6 flex items-center gap-3">
@@ -647,8 +1292,8 @@ export function MarketFinder() {
           </h3>
 
           <p className="mt-2 text-slate-200">
-            Users can search by purchase price or rental income independently.
-            Additional inputs refine the output.
+            Users can search by purchase price, rental income, property type,
+            bedrooms, bathrooms, and price range.
           </p>
         </Card>
 
