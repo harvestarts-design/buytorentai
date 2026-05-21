@@ -6,33 +6,30 @@ import {
   CheckCircle2,
   Info,
   Search,
-  ShieldCheck,
   TrendingUp,
 } from "lucide-react";
 import { Button, Card, Metric, ScoreBadge } from "@/components/ui";
-import { CTA } from "@/components/CTA";
 import { formatCurrency } from "@/lib/format";
-
-const earlyAccessFormUrl = "PASTE_YOUR_TALLY_FORM_LINK_HERE";
 
 export default function HomePage() {
   return (
     <>
       <section className="relative overflow-hidden bg-white">
-        <div className="mx-auto max-w-7xl px-6 pt-6 lg:px-8">
-  <Image
-    src="/public/buytorent-banner.png"
-    alt="BuyToRent AI banner"
-    width={2048}
-    height={700}
-    priority
-    className="max-h-[300px] w-full rounded-[2rem] border border-slate-200 object-cover object-center shadow-xl"
-  />
-</div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(22,183,201,0.16),_transparent_36%),radial-gradient(circle_at_top_right,_rgba(6,42,85,0.08),_transparent_32%)]" />
+        <div className="relative mx-auto max-w-7xl px-6 pt-6 lg:px-8">
+          <Image
+            src="/public/buytorent-banner.png"
+            alt="BuyToRent AI banner"
+            width={2048}
+            height={700}
+            priority
+            className="max-h-[300px] w-full rounded-[2rem] border border-slate-200 object-contain object-center shadow-xl"
+          />
+        </div>
+
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(22,183,201,0.16),_transparent_36%),radial-gradient(circle_at_top_right,_rgba(6,42,85,0.08),_transparent_32%)]" />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-         <div className="grid items-center gap-12 py-10 lg:grid-cols-2 lg:py-14">
+          <div className="grid items-center gap-12 py-10 lg:grid-cols-2 lg:py-14">
             <div>
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#16B7C9]/30 bg-[#16B7C9]/10 px-4 py-2 text-sm font-semibold text-[#062A55]">
                 <TrendingUp className="h-4 w-4 text-[#16B7C9]" />
@@ -44,22 +41,16 @@ export default function HomePage() {
               </h1>
 
               <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-700">
-                BuyToRent AI helps rental investors find affordable markets,
-                analyze gross monthly rent, and spot properties with strong rent
-                potential before they buy.
+                Find better rental markets before you buy. BuyToRent AI helps
+                long-term rental investors compare property prices, gross
+                monthly rent, gross yield, market risk, rental demand, taxes,
+                and investor assumptions in one place. Instead of bouncing
+                between listings, rent comps, mortgage calculators, and
+                spreadsheets, BuyToRent AI gives investors a faster way to
+                identify high-potential rental markets and properties.
               </p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button href="/calculators">
-                  Use calculators <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-
-                <Button href="/early-access">
-                  Want more info? <Info className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-
-              <div className="mt-8 grid gap-3 text-sm font-semibold text-slate-700 sm:grid-cols-3">
+              <div className="mt-6 grid gap-3 text-sm font-semibold text-slate-700 sm:grid-cols-3">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-[#16B7C9]" />
                   Market ranking
@@ -74,6 +65,16 @@ export default function HomePage() {
                   <CheckCircle2 className="h-4 w-4 text-[#16B7C9]" />
                   Deal alerts
                 </div>
+              </div>
+
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <Button href="/mortgage-estimator">
+                  Use calculators <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+
+                <Button href="/early-access">
+                  Want more info? <Info className="ml-2 h-4 w-4" />
+                </Button>
               </div>
             </div>
 
@@ -123,7 +124,7 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-8 text-[#062A55] lg:px-8">
-        <div className="mb-10 max-w-3xl">
+        <div className="mb-8 max-w-3xl">
           <h2 className="text-3xl font-black tracking-tight text-[#062A55] sm:text-4xl">
             Find markets where the numbers actually work.
           </h2>
@@ -149,7 +150,7 @@ export default function HomePage() {
           </a>
 
           <a
-            href="/calculators"
+            href="/mortgage-estimator"
             className="block transition hover:-translate-y-1"
           >
             <Card className="h-full p-7">
@@ -178,58 +179,9 @@ export default function HomePage() {
           </a>
         </div>
       </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
-        <div className="grid gap-6 lg:grid-cols-2">
-          <a
-            href="/calculators"
-            className="block transition hover:-translate-y-1"
-          >
-            <Card className="h-full p-8">
-              <ShieldCheck className="mb-5 h-10 w-10 text-[#16B7C9]" />
-
-              <h3 className="text-2xl font-black text-white">
-                Built for new rental investors
-              </h3>
-
-              <p className="mt-4 text-slate-200">
-                Instead of forcing you to piece together listings, rent comps,
-                mortgage calculators, and spreadsheets, BuyToRent AI helps you
-                compare price, rent potential, yield, and market risk in one
-                place.
-              </p>
-            </Card>
-          </a>
-
-          <Card className="p-8">
-            <h3 className="text-2xl font-black text-white">
-              Join early access
-            </h3>
-
-            <p className="mt-3 text-slate-200">
-              Get the first market reports, calculator access, and launch
-              updates.
-            </p>
-
-            <div className="mt-6">
-              <a
-                href={earlyAccessFormUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-[#16B7C9] px-6 font-bold text-white transition hover:bg-[#119AA9]"
-              >
-                Get early access
-              </a>
-            </div>
-
-            <p className="mt-3 text-xs text-slate-300">
-              No spam. Just early product access and rental market insights.
-            </p>
-          </Card>
-        </div>
-      </section>
-
-      <CTA />
+    </>
+  );
+}
     </>
   );
 }
