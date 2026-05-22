@@ -13,17 +13,18 @@ export default function HomePage() {
   return (
     <>
       <section className="relative overflow-hidden bg-white">
-        <div className="relative mx-auto max-w-7xl px-6 pt-6 lg:px-8">
-        <div className="relative h-[260px] w-full overflow-hidden rounded-[2rem] border border-slate-200 shadow-xl">
-  <Image
-    src="/buytorent-banner.png"
-    alt="BuyToRent AI banner"
-    fill
-    priority
-    className="object-cover object-center"
-  />
+       <div className="relative mx-auto max-w-7xl px-6 pt-6 lg:px-8">
+  <div className="relative h-[280px] w-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl">
+    <Image
+      src="/public/buytorent-banner.png"
+      alt="BuyToRent AI banner"
+      fill
+      priority
+      sizes="100vw"
+      className="object-cover object-center"
+    />
+  </div>
 </div>
-        </div>
 
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(22,183,201,0.16),_transparent_36%),radial-gradient(circle_at_top_right,_rgba(6,42,85,0.08),_transparent_32%)]" />
 
