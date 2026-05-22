@@ -27,8 +27,8 @@ export function Header() {
           <Image
             src="/public/buytorent-logo.png"
             alt="BuyToRent AI"
-            width={380}
-            height={190}
+            width={437}
+            height={219}
             priority
             className="h-28 w-auto object-contain"
           />
