@@ -1,14 +1,12 @@
 import Image from "next/image";
 import {
-  ArrowRight,
   Bell,
   Calculator,
   CheckCircle2,
-  Info,
   Search,
   TrendingUp,
 } from "lucide-react";
-import { Button, Card, Metric, ScoreBadge } from "@/components/ui";
+import { Card, Metric, ScoreBadge } from "@/components/ui";
 import { formatCurrency } from "@/lib/format";
 
 export default function HomePage() {
@@ -16,14 +14,15 @@ export default function HomePage() {
     <>
       <section className="relative overflow-hidden bg-white">
         <div className="relative mx-auto max-w-7xl px-6 pt-6 lg:px-8">
-          <Image
-            src="/public/buytorent-banner.png"
-            alt="BuyToRent AI banner"
-            width={2048}
-            height={700}
-            priority
-            className="max-h-[300px] w-full rounded-[2rem] border border-slate-200 object-contain object-center shadow-xl"
-          />
+        <div className="relative h-[260px] w-full overflow-hidden rounded-[2rem] border border-slate-200 shadow-xl">
+  <Image
+    src="/buytorent-banner.png"
+    alt="BuyToRent AI banner"
+    fill
+    priority
+    className="object-cover object-center"
+  />
+</div>
         </div>
 
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(22,183,201,0.16),_transparent_36%),radial-gradient(circle_at_top_right,_rgba(6,42,85,0.08),_transparent_32%)]" />
@@ -67,16 +66,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <Button href="/mortgage-estimator">
-                  Use calculators <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-
-                <Button href="/early-access">
-                  Want more info? <Info className="ml-2 h-4 w-4" />
-                </Button>
               </div>
-            </div>
 
             <Card className="p-6 backdrop-blur">
               <div className="mb-5 flex items-center justify-between">
